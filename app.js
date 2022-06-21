@@ -10,7 +10,7 @@ const HBS=require('handlebars')
 // const dotenv=require('dotenv');
 
 const morgan=require('morgan');
-
+ 
 
 
 const adminRouter = require('./routes/admin');
@@ -24,7 +24,7 @@ db.connect((err)=>{
   else console.log(`connection succeed`);
 });
 
-const app = express();
+const app = express();  
 
 
 // view engine setup 
