@@ -1,0 +1,113 @@
+<div id="sidenav">
+  <main id="main" class="main">
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sale Summary</h5>
+
+              <p id="date_filter">
+
+              <form action="#" id="date-range">
+                
+                {{#when head_data 'eq' ''}}
+                <span id="date-label-from" class="date-label">From:
+                </span><input class="date_range_filter date" name="fromdate" type="date" id="datepicker_from" />
+                <span id="date-label-to" class="date-label">To:</span>
+                <input class="date_range_filter
+          date" type="date" id="datepicker_to" name="todate" />
+                {{/when}}
+
+                {{#when head_data 'noteq' ''}}
+                <span id="date-label-from" class="date-label">From:
+                </span><input class="date_range_filter date" name="fromdate" value="{{startDate}}" type="date" id="datepicker_from" />
+                <span id="date-label-to" class="date-label">To:</span>
+                <input class="date_range_filter
+          date" type="date" id="datepicker_to" value="{{endDate}}" name="todate" />
+                {{/when}}
+
+                <button class="btn btn-primary bg-primary btn-lg btn-block text-info" type="submit">Refresh</button>
+
+              </form>
+
+              </p>
+
+              <table class="table datatable">
+                <h4>{{head_data}}</h4>
+                <thead>
+
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Total Revenue</th>
+                    <th scope="col">Total walletpay</th>
+
+
+
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {{#each report}}
+                  <tr>
+                    <th scope="row">{{inc @index}}</th>
+                    <td>{{this._id}}</td>
+                    <td><span>{{this.TotalSum}}</span></td>
+                    <td><span>{{this.walletpay}}</span></td>
+
+                  </tr>
+
+                  {{/each}}
+                  <thead>
+
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Total</th>
+                      <th scope="col">{{totalam}}</th>
+                      <th scope="col">{{walpay}}</th>
+
+
+
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+
+                </tbody>
+              </table>
+
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script>
+
+
+  $("#date-range").submit((e) => {
+    e.preventDefault()
+
+    $.ajax({
+      url: '/admin/dailyreport',
+      method: 'post',
+      data: $('#date-range').serialize(),
+      success: (response) => {
+       /// console.log(response)
+        $('#sidenav').html(response)
+
+      }
+    })
+  })
+
+
+
+
+</script>

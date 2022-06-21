@@ -1,0 +1,378 @@
+<main id="main" class="pt-5">
+  
+
+      <div class="row gutters-sm">
+        
+        <div class="col-8">
+          <section class="h-100 gradient-custom">
+            <div class="container py-0 h-100 w-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-12">
+                  <div class="card" style="border-radius: 10px;">
+                    <div class="card-header px-4 py-5">
+                      <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a; "></span>!
+                        <!-- Button trigger modal -->
+
+                        <button type="button" class="btn btn-primary bg-warning " data-bs-toggle="modal"
+                          style="float:right;" data-bs-target="#staticBackdrop"
+                          onclick="orderpdf('{{orders.[0]._id}}')">
+                          Download Invoice
+                        </button>
+                      </h5>
+
+
+
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-fullscreen">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <div style="display: none;">PDF Output <button class="btn btn-success" onclick="download()">Download</button></div>
+                             <h5 class="modal-title" id="staticBackdropLabel" style="padding-left:50rem ;" >Invoice</h5>
+                              
+                              
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <iframe width="100%" height="800px">ss</iframe>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+                    </div>
+                    <div class="card-body p-4">
+                      <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
+                        <p class="small text-muted mb-0">Receipt Voucher : # {{orders.[0].receipt}}</p>
+                      </div>
+                      <input type="hidden" id="pdfdata" value="{{orders}}">
+                      {{#each orders}}
+                      <div class="card shadow-0 border mb-4">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <img src="/uploads/{{this.product.images.[0]}}" class="img-fluid" alt="Phone">
+                            </div>
+                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                              <p class="text-muted mb-0"> {{this.product.Name}}</p>
+                            </div>
+                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                              <p class="text-muted mb-0 small"></p>
+                            </div>
+                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                              <p class="text-muted mb-0 small"></p>
+                            </div>
+
+                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                              <p class="text-muted mb-0 small">Qty: {{this.quantity}}</p>
+                            </div>
+                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                              <p class="text-muted mb-0 small">&#x20B9; {{this.total}}</p>
+                            </div>
+                          </div>
+                          <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                          <div class="row d-flex align-items-center">
+                            <div class="col-md-2">
+                              <p class="text-muted mb-0 small">Track Order </p>
+                            </div>
+                            <div class="col-md-10">
+                              <div class="progress" style="height: 6px; border-radius: 16px;">
+
+                                {{#when this.status.placed 'eq' true}}
+                                <div class="progress-bar" role="progressbar"
+                                  style="width: 18%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
+                                {{/when}}
+                                {{#when this.status.cancel 'eq' true}}
+                                <div class="progress-bar" role="progressbar"
+                                  style="width: 0%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
+                                  aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                                {{/when}}
+                                {{#when this.status.dispatch 'eq' true}}
+                                <div class="progress-bar" role="progressbar"
+                                  style="width: 38%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
+                                {{/when}}
+                                {{#when this.status.shipped 'eq' true}}
+                                <div class="progress-bar" role="progressbar"
+                                  style="width: 75%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
+                                {{/when}}
+                                {{#when this.status.delivered 'eq' true}}
+                                <div class="progress-bar" role="progressbar"
+                                  style="width: 100%; border-radius: 16px; background-color: #a8729a;"
+                                  aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                {{/when}}
+
+
+
+                              </div>
+                              <div class="d-flex justify-content-around mb-1">
+                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
+                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {{/each}}
+
+                      <div class="d-flex justify-content-between pt-2">
+                        <p class="fw-bold mb-0">Order Details</p>
+                        <p class="text-muted mb-0"><span
+                            class="fw-bold me-4">Total</span>&#x20B9;{{orders.[0].totalAmount}} </p>
+                      </div>
+
+                      <div class="d-flex justify-content-between pt-2">
+                        <p class="text-muted mb-0">Invoice Number : # {{orders.[0].receipt}}</p>
+                        {{#when orders.[0].Walletpay 'noteq' 0}}
+                        <p class="text-muted mb-0"><span class="fw-bold me-4">Wallet Pay</span> &#x20B9;
+                          {{orders.[0].Walletpay}}</p>
+                        {{/when}}
+                      </div>
+
+                      <div class="d-flex justify-content-between">
+                        <p class="text-muted mb-0">Invoice Date : {{orders.[0].dat}}</p>
+                        <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                      </div>
+
+                      <div class="d-flex justify-content-between mb-2">
+
+
+                      </div>
+                    </div>
+                    <div class="card-footer border-0 px-4 py-5"
+                      style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                      <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+                        paid: <span class="h2 mb-0 ms-2">&#x20B9; {{orders.[0].totalAmount}}</span></h5>
+                    </div>
+
+
+
+    
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+      </div>
+
+
+
+
+</main>
+
+<script type="text/javascript">
+
+  function goDoSomething(d) {
+    alert(d.getAttribute("data-option"));
+  }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://github.com/devongovett/pdfkit/releases/download/v0.10.0/pdfkit.standalone.js"></script>
+<script src="https://github.com/devongovett/blob-stream/releases/download/v0.1.3/blob-stream.js"></script>
+
+<script>
+  
+  function orderpdf(id) {
+
+
+
+    $.ajax({
+      url: '/orderpdf',
+      data: {
+        userid: id
+      },
+      method: 'post',
+      success: (response) => {
+
+        //console.log(response)
+        var invoice = response
+        dataupload(invoice)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }
+    })
+
+  }
+
+
+  function dataupload(invoice) {
+
+
+    const doc = new PDFDocument();
+
+    // pipe the document to a blob
+    const stream = doc.pipe(blobStream());
+
+    // add your content to the document here, as usual
+
+    doc.fontSize(25).text("", 100, 100);
+
+
+    doc
+      .fillColor('#e134eb')
+      .text('Jasmin Fashions.', 60, 57)
+      .underline(50, 100, 500, 15, { color: "#0000FF" })
+      .fontSize(20)
+      .fontSize(10)
+      .text('123 Ernakulam', 200, 65, { align: 'right' })
+      .text('Edappalli, NY, 10025', 200, 80, { align: 'right' })
+
+      .moveDown();
+
+    doc.fillColor('black')
+      .text(`Invoice Number: # ${invoice[0].receipt}`, 50, 130)
+      .text(`Invoice Date: ${invoice[0].dat}`, 50, 150)
+     
+      
+
+      .moveDown();
+
+    doc.fillColor('black')
+    .underline(50, 190, 500, 15, { color: "black" })
+      .text(`Name`, 50, 190)
+      .text(`Quantity`, 370, 190)
+      .text(`Amount`, 450, 190)
+      
+      .moveDown();
+
+
+    generateInvoiceTable(doc, invoice);
+    //generateFooter(doc)
+    
+    // Add another page
+
+
+    doc.end();
+
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+
+    let blob;
+
+    function download() {
+      if (!blob) return;
+      var url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = 'invoice.pdf';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    stream.on("finish", function () {
+      // get a blob you can do whatever you like with
+      blob = stream.toBlob("application/pdf");
+
+      // or get a blob URL for display in the browser
+      const url = stream.toBlobURL("application/pdf");
+      const iframe = document.querySelector("iframe");
+      iframe.src = url;
+    });
+
+
+  }
+
+function generateFooter(doc,pos,invoice) {
+  tot=invoice[0].Walletpay+invoice[0].totalAmount
+	doc.fontSize(10,)
+  .text('Thank you for your Order.',50,pos+50,{ align: 'center', width: 500 })
+  .underline(50, pos-40, 500, 15, { color: "black" })
+  .fontSize(12)
+  .text("Rs: "+invoice[0].totalAmount,450,pos-20)
+  .text('Total',370,pos-20)
+  .text('Wallet',370,pos-5)
+  .text("Rs: "+invoice[0].Walletpay,450,pos-5)
+  .text('Grand Total',370,pos+15)
+  .text("Rs: "+tot,450,pos+15)
+   
+}
+
+
+
+
+  function generateTableRow(doc, y, c1, c2, c3, c4, c5) {
+    doc.fontSize(10)
+      .text(c1, 50, y)
+      .text(c2, 300, y, { width: 90, align: 'right' })
+      .text(c3, 400, y, { width: 90, align: 'right' })
+      .text(c4, 450, y, { width: 90, align: 'right' })
+      .text(c5, 0, y, { align: 'right' });
+  }
+
+
+  function generateInvoiceTable(doc, invoice) {
+
+    let i,
+      invoiceTableTop = 180;
+
+    for (i = 0; i < invoice.length; i++) {
+      
+      const item = invoice[i].product;
+      const position = invoiceTableTop + (i + 1) * 30;
+      pos=position
+      generateTableRow(
+        doc,
+        position,
+
+        item.Name,
+        invoice[i].quantity,
+        "Rs. " + invoice[i].total,
+
+
+      );
+    }
+
+    generateFooter(doc,pos+50,invoice)
+  }
+
+
+
+
+</script>

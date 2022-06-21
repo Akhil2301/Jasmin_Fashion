@@ -1,0 +1,317 @@
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <!--- add category -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo">Add Item</button>
+
+
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/product" method="post" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Item
+                                                Name:</label>
+                                            <input type="text" class="form-control" name="Name" id="Name">
+                                            <span style="color: red;" id="Name-error"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Catagory</label>
+                                            {{!-- <input type="text" name="status" class="form-control"
+                                                value="{{user.status}}"> --}}
+                                            <select name="catagoryId" id="categoryId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option>Catagory list</option>
+                                                {{#each categorylist}}
+
+                                                <option value="{{this._id}}">{{this.category}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Sub Category</label>
+                                            {{!-- <input type="text" name="status" class="form-control"
+                                                value="{{user.status}}"> --}}
+                                            <select name="subcatagoryId" id="subcatagoryId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option>Sub Catagory </option>
+                                                {{#each subcategorylist}}
+
+                                                <option value="{{this._id}}">{{this.subCategory}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Description
+                                                :</label>
+                                            <input type="text" class="form-control" name="description" id="description">
+                                            <span style="color: red;" id="description-error"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Price
+                                                :</label>
+                                            <input type="number" class="form-control" name="price" id="price">
+                                            <span style="color: red;" id="price-error"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Image
+                                                :</label>
+                                            <input type="file" class="form-control" name="image" id="image"
+                                                onchange="viewImage(event)" multiple>
+                                            <span style="color: red;" id="image-error"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <img src="" style="height: 4rem; width: 3rem; visibility:hidden"
+                                                id="imgView" alt="" /> <br>
+                                            <span style="color: red;" id="image-error"></span>
+                                        </div>
+
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" id="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Products</h5>
+
+
+                            <!-- Table with stripped rows -->
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Sub Category</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Images</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each product}}
+                                    <tr>
+                                        <th scope="row">{{inc @index}}</th>
+                                        <td>{{Name}}</td>
+                                        <td>{{price}}</td>
+                                        <td>{{description}}</td>
+                                        <td>{{this.subcategory.subCategory}}</td>
+                                        <td>{{this.catagory.category}}</td>
+                                        <td> {{#each images}}
+
+                                            <img src="/uploads/{{this}}" alt="" style="width: 50px; height: 50px;">
+
+
+                                            {{/each}}
+                                            {{!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal1{{this._id}}" data-bs-whatever="@mdo">Edit
+                                                Image
+                                            </button> --}}
+
+
+                                            <div class="modal fade" id="exampleModal1{{this._id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Image
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/admin/edit-image/{{this._id}}" method="post"
+                                                                enctype="multipart/form-data">
+                                                                <div class="mb-3">
+                                                                    <label for="recipient-name"
+                                                                        class="col-form-label">Images
+                                                                        :</label>
+                                                                    {{#each images}}
+
+                                                                    <img src="/uploads/{{this}}" alt="" id="imgView"
+                                                                        style="width: 50px; height: 50px;">
+
+                                                                    <label for="">{{this}}</label> <br>
+
+                                                                    <input type="file" name="images" class="form-control"
+                                                                        onchange="viewImage(event)"
+                                                                        onchange="viewImage(event)" >
+                                                                    {{/each}}
+                                                                    <span style="color: red;" id="price-error"></span>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" id="submit"
+                                                                        class="btn btn-primary">Save</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal{{this._id}}" data-bs-whatever="@mdo">Edit
+                                            </button>
+
+
+                                            <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/admin/edit-product/{{this._id}}"
+                                                                method="post">
+                                                                <div class="mb-3">
+                                                                    <label for="recipient-name"
+                                                                        class="col-form-label">Item
+                                                                        Name:</label>
+                                                                    <input type="text" class="form-control" name="Name"
+                                                                        id="Name" value="{{Name}}">
+                                                                    <span style="color: red;" id="Name-error"></span>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="">Catagory</label>
+                                                                    {{!-- <input type="text" name="status"
+                                                                        class="form-control" value="{{user.status}}">
+                                                                    --}}
+                                                                    <select name="catagoryId" id="categoryId"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        <option value="{{this.catagory._id}}">
+                                                                            {{this.catagory.category}}</option>
+                                                                        {{#each ../categorylist}}
+
+                                                                        <option value="{{this._id}}">{{this.category}}
+                                                                        </option>
+                                                                        {{/each}}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="">Sub Category</label>
+                                                                    {{!-- <input type="text" name="status"
+                                                                        class="form-control" value="{{user.status}}">
+                                                                    --}}
+                                                                    <select name="subcatagoryId" id="subcatagoryId"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        <option value="{{this.subcategory._id}}">
+                                                                            {{this.subcategory.subCategory}} </option>
+                                                                        {{#each ../subcategorylist}}
+
+                                                                        <option value="{{this._id}}">
+                                                                            {{this.subCategory}}</option>
+                                                                        {{/each}}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="recipient-name"
+                                                                        class="col-form-label">Description
+                                                                        :</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="description" id="description"
+                                                                        value="{{description}}">
+                                                                    <span style="color: red;"
+                                                                        id="description-error"></span>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="recipient-name"
+                                                                        class="col-form-label">Price
+                                                                        :</label>
+                                                                    <input type="number" class="form-control"
+                                                                        name="price" id="price" value="{{price}}">
+                                                                    <span style="color: red;" id="price-error"></span>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" id="submit"
+                                                                        class="btn btn-primary">Save</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                           <a class="btn btn-danger" href="/admin/delete-product/{{this._id}}"
+                                                    onclick="confirmation(event)">Delete
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </section>
+
+</main><!-- End #main -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
+
+    function confirmation(ev) {
+
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+                if (willDelete) {
+                    swal("Poof! Your  file has been deleted!", {
+                        icon: "success",
+
+                    });
+                    location.href = urlToRedirect
+                } else {
+
+                    swal("Your  file is safe!");
+
+                }
+            });
+    }
+</script>

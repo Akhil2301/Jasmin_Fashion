@@ -1,0 +1,41 @@
+{
+  "name": "jasmine-fashions",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon app"
+  },
+  "dependencies": {
+    "audit": "^0.0.6",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "~1.4.4",
+    "cropperjs": "^1.5.12",
+    "D": "^1.0.0",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
+    "express": "~4.16.1",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.0",
+    "handlebars": "^4.7.7",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "mongodb": "^4.6.0",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.4",
+    "paypal-rest-sdk": "^1.8.1",
+    "pdfkit": "^0.13.0",
+    "razorpay": "^2.8.1",
+    "referral-code-generator": "^1.0.8",
+    "sharp": "^0.30.4",
+    "sweetalert2": "^11.4.14",
+    "twilio": "^3.77.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.16"
+  }
+}

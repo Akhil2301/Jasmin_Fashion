@@ -1,0 +1,180 @@
+<main class="pt-5">
+    <div class="container pt-5">
+        <div class="main-body pt-5">
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+
+
+                                {{!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                                    class="crop-image" id="crop-image">
+                                <input type="file" name="input-file" id="input-file" accept=".png,.jpg,.jpeg">
+                                <label for="input-file" class="label-file">Change Image</label> --}}
+
+
+                                {{!-- <div class="containercrop"> --}}
+                                    <div class="group">
+                                        {{#if user.photo}}
+                                        <img src="{{user.photo}}" alt="" class="crop-image" id="crop-image">
+                                        {{else}}
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                                            class="crop-image" id="crop-image">
+                                        {{/if}}
+                                        <input type="file" name="input-file" id="input-file"
+                                            accept=".png,.jpg,.jpeg,.webp">
+                                        <label for="input-file" class="label-file">Change Image</label>
+                                    </div>
+                                    {{!--
+                                </div> --}}
+
+                                <!-- Modal para cortar imagen -->
+
+                                <div class="modalcrop mt-5">
+                                    <div class="modalcrop-content">
+                                        {{!-- <form action="/crop-images" method="post"> --}}
+                                            <div class="modalcrop-header">
+                                                <p class="text-primary">Crop Image</p>
+                                            </div>
+                                            <div class="modalcrop-body">
+                                                <div class="content-imagen-cropper">
+                                                    <img src="" alt="" class="img-cropper" id="img-cropper">
+                                                </div>
+                                                <div class="content-imagen-sample">
+                                                    <div src="" alt="" class="img-sample" id="img-croppered"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modalcrop-footer">
+                                                <input type="hidden" value="{{user._id}}" id="userval" />
+                                                <button type="submit" class="btn primary" id="cut">Crop</button>
+                                                <button class="btn secundary" id="close">Cancel</button>
+                                            </div>
+                                            {{!--
+                                        </form> --}}
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <h4>{{user.fname}} {{user.lname}}</h4>
+                                    {{!-- <p class="text-secondary mb-1">Full Stack Developer</p>
+                                    <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> --}}
+                                    {{!-- <button class="btn btn-primary">Follow</button>
+                                    <button class="btn btn-outline-primary">Message</button> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/userpage" style="text-decoration:none ;" class="mb-0">My Account</a>
+
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/orders" style="text-decoration:none ;" class="mb-0">Orders</a>
+
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/Editprofie/{{user._id}}" style="text-decoration:none ;" class="mb-0">Edit
+                                    profie</a>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/changepassword" style="text-decoration:none ;" class="mb-0">Change
+                                    Password</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/address" style="text-decoration:none ;" class="mb-0">Address</a>
+                                <span class="text-secondary"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/referalcode" style="text-decoration:none ;" class="mb-0">Referal Code</a>
+                                <span class="text-secondary"></span>
+                            </li>
+                            {{!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/wallet" style="text-decoration:none ;" class="mb-0">Wallet</a>
+                                <span class="text-secondary"></span>
+                            </li> --}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+
+                    <a href="/orders" id="{{status}}" hidden onclick="menu()"></a>
+                    <div class="container mt-0 p-1 col-md-12">
+                        <div class="d-flex justify-content-center row">
+                            <div class="col-md-10">
+                                <div class="rounded">
+                                    <div class="table-responsive table-borderless">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        <div class="toggle-btn">
+                                                            <div class="inner-circle"></div>
+                                                        </div>
+                                                    </th>
+                                                    {{!-- <th># Order </th> --}}
+                                                    <th>Delivery</th>
+                                                    <th>Phone</th>
+                                                    <th>Zip</th>
+                                                    <th>status</th>
+                                                    <th>Total</th>
+                                                    <th>Date</th>
+                                                    <th>Cancel</th>
+                                                    <th>Detail</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-body">
+                                                {{#each orders}}
+                                                <tr class="cell-1">
+                                                    <td class="text-center">
+                                                        <div class="toggle-btn">
+                                                            <div class="inner-circle"></div>
+                                                        </div>
+                                                    </td>
+                                                    {{!-- <td># {{this._id}}</td> --}}
+                                                    <td><span>{{this.deliveryDetails.address}}</span></td>
+                                                    <td><span>{{this.deliveryDetails.phone}}</span></td>
+                                                    <td><span>{{this.deliveryDetails.zip}}</span></td>
+                                                    {{#if this.status.placed}}
+                                                    <td><span style="color: hsl(35, 100%, 53%);">Placed</span></td>
+                                                    {{/if}}
+                                                    {{#if this.status.cancel}}
+                                                    <td><span style="color: red;">Cancelled</span></td>
+                                                    {{/if}}
+                                                    {{#if this.status.dispatch}}
+                                                    <td><span style="color: #066d3c;">Dispatced</span></td>
+                                                    {{/if}}
+                                                    <td>{{this.totalAmount}}</td>
+                                                    <td>{{this.dat}}</td>
+
+                                                    <td><a href="/cancel-order/{{this._id}}"
+                                                            style="text-decoration:none;">Cancel</a>
+                                                    </td>
+                                                    <td><a href="/orderdetail/{{this._id}}"
+                                                            style="text-decoration:none;">Details</a></td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script>
+    document.getElementById('ok').click();
+</script>

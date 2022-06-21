@@ -1,0 +1,398 @@
+<main id="main" class="main">
+
+
+    <section class="section dashboard">
+        <div class="row">
+
+
+            <section class="section">
+                <div class="row">
+                    <div class="col-lg-6">
+
+                        <div class="card">
+                            <!--- add category -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Category</button>
+
+
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="categoryform" action="/admin/category" method="post">
+                                                <div class="mb-3">
+                                                    <label for="recipient-name" class="col-form-label">Category
+                                                        Name:</label>
+                                                    <input type="text" class="form-control" name="category"
+                                                        id="category">
+                                                    <span class="text-warning" id="category-error"></span>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" id="submit"
+                                                        class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--- catogory end --->
+                            <div class="card-body">
+                                <h5 class="card-title">Category Table</h5>
+
+                                <!-- Default Table -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {{#each categorylist}}
+                                        <tr>
+                                            <th scope="row">{{inc @index}}</th>
+                                            <td>{{category}}</td>
+                                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal{{this._id}}"
+                                                    data-bs-whatever="@mdo">Edit </button>
+
+
+
+                                                <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="categoryform" action="/admin/edit-category/{{this._id}}"
+                                                                    method="post">
+                                                                    <div class="mb-3">
+                                                                        <label for="recipient-name"
+                                                                            class="col-form-label">Category
+                                                                            Name:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="category" id="{{category}}"
+                                                                            value="{{category}}">
+                                                                        <span class="text-warning"
+                                                                            id="{{inc @index}}"></span>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" id="submit"
+                                                                            class="btn btn-primary" onclick="return categoryvalid(event,'{{category}}','{{inc @index}}')">Save</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><a class="btn btn-primary" href="/admin/delete-category/{{this._id}}"
+                                                    onclick="confirmation(event)">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                <!-- End Default Table Example -->
+                            </div>
+                        </div>
+
+                        <div class="card">
+
+                            <!--- add Brand -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Add Brand</button>
+
+
+
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="brand" action="/admin/brand" method="post">
+                                                <div class="mb-3">
+                                                    <label for="recipient-name" class="col-form-label">Brand
+                                                        Name:</label>
+                                                    <input type="text" class="form-control" name="brand" id="brandname">
+                                                    <span class="text-warning" id="brand-error"></span>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" id="submitbrand"
+                                                        class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--- brand end --->
+                            <div class="card-body">
+                                <h5 class="card-title">Add Brands</h5>
+
+                                <!-- Default Table -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Brand</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each brandlist}}
+                                        <tr>
+                                            <th scope="row">{{inc @index}}</th>
+                                            <td>{{brand}}</td>
+                                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal{{this._id}}"
+                                                    data-bs-whatever="@mdo">Edit </button>
+
+
+
+                                                <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="/admin/edit-brand/{{this._id}}"
+                                                                    method="post">
+                                                                    <div class="mb-3">
+                                                                        <label for="recipient-name"
+                                                                            class="col-form-label">Brand
+                                                                            Name:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="brand" id="{{brand}}" value="{{brand}}">
+                                                                        <span  class="text-warning"
+                                                                            id="brn{{inc @index}}"></span>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" id="submitbrand"
+                                                                            class="btn btn-primary" onclick="return brandvalidate(event,'{{brand}}','brn{{inc @index}}')">Save</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><a class="btn btn-primary" href="/admin/delete-brand/{{this._id}}"
+                                                    onclick="confirmation(event)">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+
+                                    </tbody>
+                                </table>
+                                <!-- End Default Table Example -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+
+                        <div class="card">
+                            <!--- Sub CAtegory  -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal2" data-bs-whatever="@mdo">Add Sub-Category</button>
+
+
+
+                            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add Sub Category</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="subcategory" action="/admin/subcategory" method="post">
+                                                <div class="mb-3">
+                                                    <label for="">Catagory</label>
+                                                    {{!-- <input type="text" name="status" class="form-control"
+                                                        value="{{user.status}}"> --}}
+                                                    <select name="catagoryId" id="categoryId" class="form-select"
+                                                        aria-label="Default select example">
+                                                        <option>Catagory list</option>
+                                                        {{#each categorylist}}
+
+                                                        <option value="{{this._id}}">{{this.category}}</option>
+                                                        {{/each}}
+
+
+                                                    </select>
+                                                    <span class="text-warning" id="cat-error"></span>
+                                                </div>
+
+
+                                                <div class="mb-3">
+                                                    <label for="recipient-name" class="col-form-label">Sub Category
+                                                        Name:</label>
+                                                    <input type="text" class="form-control" name="subCategory"
+                                                        id="subcategory_id">
+                                                    <span class="text-warning" id="sub-error"></span>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" id="submitsubcategory"
+                                                        class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--- Sub Category end --->
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">Subcategory</h5>
+
+                                <!-- Default Table -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sub Category</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each subcategorylist}}
+                                        <tr>
+                                            <th scope="row">{{inc @index}}</th>
+                                            <td>{{this.subCategory}}</td>
+                                            <td>{{this.subcategory.category}}</td>
+                                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal{{this._id}}"
+                                                    data-bs-whatever="@mdo">Edit </button>
+
+
+                                                <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="/admin/edit-subcategory/{{this._id}}"
+                                                                    method="post">
+
+                                                                    <div class="mb-3">
+                                                                        <label for="">Catagory</label>
+                                                                        {{!-- <input type="text" name="status"
+                                                                            class="form-control"
+                                                                            value="{{user.status}}"> --}}
+                                                                        <select name="catagoryId" id="categoryIdEdit"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            <option value="{{this.subcategory._id}}">
+                                                                                {{this.subcategory.category}}</option>
+                                                                            {{#each ../categorylist}}
+
+                                                                            <option value="{{this._id}}">
+                                                                                {{this.category}}
+                                                                            </option>
+                                                                            {{/each}}
+
+
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="mb-3">
+                                                                        <label for="recipient-name"
+                                                                            class="col-form-label">Sub Category
+                                                                            Name:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="subCategory" id="{{this.subCategory}}"
+                                                                            value="{{this.subCategory}}">
+                                                                        <span class="text-warning"
+                                                                            id="sub{{inc @index}}"></span>
+
+                                                                            
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" id="submitsubcategory"
+                                                                            class="btn btn-primary" onclick="return subvalidate(event,'{{this.subCategory}}','sub{{inc @index}}')" >Save</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><a class="btn btn-primary" href="/admin/delete-subcategory/{{this._id}}"
+                                                    onclick="confirmation(event)">Delete</a></td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                <!-- End Default Table Example -->
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+

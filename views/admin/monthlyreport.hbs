@@ -1,0 +1,67 @@
+</section>
+
+
+<main id="main" class="main">
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Monthly Report</h5>
+
+        
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Place</th>
+                  <th scope="col">mobile</th>
+                  <th scope="col">Pincode</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Amount</th>
+                  {{!-- <th scope="col">payment</th> --}}
+
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each report}}
+                <tr>
+                  <th scope="row">{{inc @index}}</th>
+                  <td>{{this.dat}}</td>
+                  <td><span>{{this.deliveryDetails.address}}</span></td>
+                  <td><span>{{this.deliveryDetails.phone}}</span></td>
+                  <td><span>{{this.deliveryDetails.zip}}</span></td>
+                  {{#if this.status.placed}}
+                  <td><span style="color: rgb(54, 9, 233);">Placed</span></td>
+                  {{/if}}
+                  {{#if this.status.cancel}}
+                  <td><span style="color: red;">Cancelled</span></td>
+                  {{/if}}
+                  {{#if this.status.dispatch}}
+                  <td><span style="color: #066d3c;">Dispatced</span></td>
+                  {{/if}}
+                  {{#if this.status.shipped}}
+                  <td><span style="color: #066d3c;">shipped</span></td>
+                  {{/if}}
+                  {{#if this.status.delivered}}
+                  <td><span style="color: #066d3c;">Deliverd</span></td>
+                  {{/if}}
+                  <td>{{this.totalAmount}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+           
+           
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,75 @@
+<main class="pt-5 pb-5">
+<div class="main-content pt-5 pb-5" style="top:3rem;bottom:1000rem;">
+
+    <section class="pt-5 pb-5">
+        <div class="container py-5 pt-5 pb-4 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100 pb-5 pt-1">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5 pb-5">
+                    <div class="card shadow-2-strong " style="border-radius:1rem;background-color: rgb(231, 221, 221);">
+                        <div class="card-body p-4 text-center">
+
+                            <h3 class="mb-3">Verify Otp</h3>
+                            <form action="/otp" method="post">
+
+                            <div class="form-outline mb-3">
+
+                                    <input type="text" name="referal" id="referal" class="form-control form-control-lg"
+                                        placeholder="referal" value="{{name_body.referal}}" style="display:none;" />
+                                    {{!-- <small style="color: red;"></small> --}}
+
+                                </div>
+
+                                <div class="form-outline mb-3">
+
+                                    <input type="text" name="fname" id="fname" class="form-control form-control-lg"
+                                        placeholder="First Name" value="{{name_body.fname}}" style="display: none;" />
+                                    {{!-- <small style="color: red;"></small> --}}
+
+                                </div>
+                                <div class="form-outline mb-3">
+                                    <input type="text" name="lname" id="lname" class="form-control form-control-lg"
+                                        placeholder="Last Name" value="{{name_body.lname}}" style="display: none;" />
+                                    {{!-- <small style="color: red;"></small> --}}
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="email" name="email" id="email" class="form-control form-control-lg"
+                                        placeholder="Email" value="{{name_body.email}}" style="display: none;"/>
+                                    {{!-- <small style="color: red;"></small> --}}
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="text" name="phone" id="phone" class="form-control form-control-lg"
+                                        placeholder="Phone Number" value="{{name_body.phone}}" style="display: none;" />
+                                    <small style="color: red;"></small>
+                                </div>
+
+                                  <div class="form-outline mb-3">
+                                    <input type="password" name="password" id="password"
+                                        class="form-control form-control-lg" placeholder="Password" style="display: none;" value="{{name_body.password}}" />
+                                    <small style="color: red;"></small>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="text" name="OTP" id="OTP"
+                                        class="form-control form-control-lg" placeholder="OTP"/>
+                                    {{!-- <small style="color: red;"></small> --}}
+                                </div>
+
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary"  id="submit" type="submit">Submit
+                                        </button>
+                                </div>                  
+                              
+                            </form>
+                            <span>{{err_msg}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</main>
+

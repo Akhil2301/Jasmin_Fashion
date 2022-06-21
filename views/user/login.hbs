@@ -1,0 +1,48 @@
+<br>
+<br>
+<br>
+<br>
+<main id="main mb-5">
+<div class="main-content mb-5 pt-1">
+    <section class="mb-5">
+        <div class="container py-5 h-100 mb-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5 mb-2">
+                    <div class="card shadow-2-strong " style="border-radius:1rem;background-color: rgb(231, 221, 221);">
+                        <div class="card-body p-5 text-center">
+
+                            <h3 class="mb-3">Sign in</h3>
+                            <form action="/login" method="post">
+                                <div class="form-outline mb-3">
+                                    <input type="email" name="email" id="email" class="form-control form-control-lg"
+                                        placeholder="Email" />
+
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="password" name="password" id="Password" autocomplete="off"
+                                        class="form-control form-control-lg" placeholder="Password" />
+                                    <a href="#" class="justify-content-end" style="text-decoration: none;">Forgot
+                                        Password</a>
+                                </div>
+
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">Sign In</button>
+                                </div>
+                               <span style="color: #f40707;">{{err_msg}}</span> 
+                                <hr class="my-4">
+                                <a href="/signup" class="justify-content-end" style="text-decoration: none;"><span
+                                        style="color: rgb(215, 42, 215);">New to Jasmin?</span> Create an Account</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+  
+</div>
+</main>

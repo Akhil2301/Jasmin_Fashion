@@ -1,0 +1,376 @@
+<!--Main layout-->
+
+
+
+
+
+
+
+
+
+
+<main class="mt-5 pt-5">
+
+
+
+
+
+
+  <div class="container wow fadeIn pt-5">
+
+    <!-- Heading -->
+    <h2 class="my-3 h2 text-center">CHECKOUT</h2>
+
+
+    <div class="alert alert-warning">
+      <p style="" class="pincode-text"><label class="deliveryText text-info">Deliver to:</label>
+        <span id="deliveryAddress">&nbsp;
+          {{user.fname}} {{user.lname}}, {{this.address.address}} , pin :{{this.address.zip}}, Phone :{{user.phone}}
+        </span>
+        {{!-- <a href="" class="btn bg-primary text-white" style=" float:right" id="addChangePincodeBtn">Change/Add</a> --}}
+      </p>
+
+    </div>
+
+
+
+    <!--Grid row-->
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="card mb-4">
+          <div class="card-header py-3">
+
+
+
+            <h5 class="mb-0">Products </h5>
+          </div>
+          <div class="card-body">
+            {{#each cartItem}}
+            <!-- Single item -->
+
+            <div class="row">
+
+              <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                <!-- Image -->
+
+                <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                  <img src="/uploads/{{product.images.[0]}}" class="w-50 h-50" alt="Blue Jeans Jacket" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                  </a>
+                </div>
+                <!-- Image -->
+              </div>
+
+
+              <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                <!-- Data -->
+                <p><strong>{{this.product.Name}}</strong></p>
+                {{!-- <p>Color: blue</p> --}}
+                {{!-- <p>Size: M</p> --}}
+                <p>{{this.product.description}}</p>
+
+                {{!-- <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                  title="Remove item" onclick="remove(event,'{{this._id}}','{{this.product._id}}','{{../users}}',-1)">
+                  <i class="fas fa-trash"></i>
+                </button> --}}
+
+                {{!-- <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+                  title="Move to the wish list">
+                  <i class="fas fa-heart"></i>
+                </button> --}}
+                <!-- Data -->
+              </div>
+
+              <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <!-- Quantity -->
+                <div class="d-flex mb-4" style="max-width: 300px">
+                  {{!-- <button class="btn btn-primary px-2 me-1" style="height: 2.4rem;"
+                    onclick="change('{{this._id}}','{{this.product._id}}','{{../users}}',-1)">
+                    <i class="fas fa-minus"></i>
+                  </button> --}}
+
+                  <div class="form-outline">
+                    <input min="1" id="{{this.product._id}}" name="quantity" value="{{this.quantity}}" type="text"
+                      class="form-control text-center " style="width: 5rem;" disabled="" />
+                    <label class="form-label" for="form1">
+
+                      {{#if this.product.status}}
+                      {{!-- <strong>&#x20B9; {{this.product.oferamt}}</strong>
+                      {{else}}
+                      <strong>&#x20B9; {{this.product.price}}</strong> --}}
+                      <strong>&#x20B9; {{this.total}}</strong>
+                      {{else}}
+                      <strong>&#x20B9; {{this.total}}</strong>
+                      {{/if}}
+
+
+                    </label>
+                  </div>
+
+                  {{!-- <button class="btn btn-primary px-2 ms-1 " style="height: 2.4rem;"
+                    onclick="change('{{this._id}}','{{this.product._id}}','{{../users}}',1)">
+                    <i class="fas fa-plus"></i>
+                  </button> --}}
+                </div>
+                <!-- Quantity -->
+
+                <!-- Price -->
+
+                <!-- Price -->
+
+
+
+
+              </div>
+            </div>
+
+            {{/each}}
+
+          </div>
+
+
+
+
+        </div>
+        {{!-- <div class="card mb-4">
+          <div class="card-body">
+            <p><strong>Expected shipping delivery</strong></p>
+            <p class="mb-0">12.10.2020 - 14.10.2020</p>
+          </div>
+        </div> --}}
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body">
+            <p><strong>We accept</strong></p>
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+              alt="Visa" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+              alt="American Express" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+              alt="Mastercard" />
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+      <!--Grid column-->
+
+
+      <!--Grid column-->
+      <div class="col-md-4 mb-4">
+
+        <!-- Heading -->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">ORDEER SUMMARY</span>
+          <span class="badge badge-secondary badge-pill">3</span>
+        </h4>
+ 
+        {{#if user.Wallet}}
+        <div class="alert alert-success">
+          <strong>Pay Using Jasmin Wallet ! </strong>
+         
+          <div><input class="form-check-input text-primary" type="checkbox" {{cartItem.[0].Wallet}}
+              id="flexCheckDefault" onclick="return wallet('{{user._id}}','{{user.Wallet}}')"> <strong
+              class="text-primary">Available Balance :&#x20B9;
+              {{user.Wallet}} </strong> </div>
+
+        </div>
+        {{/if}}
+        <!-- Cart -->
+        <ul class="list-group mb-3 z-depth-1">
+
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (RS)</span>
+            <strong>&#x20B9; {{totalamount}}</strong>
+          </li>
+        </ul>
+        <hr>
+
+
+        <div class="col-md-12 mb-4">
+
+          <!--Card-->
+          <div class="card border-0">
+
+            <!--Card content-->
+            <form action="#" class="card-body" id="checkout-form">
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-12 mb-2" style="display:none">
+
+                  <!--firstName-->
+                  <div class="md-form ">
+                    <input type="text" name="firstName" id="firstName" class="form-control" value="{{user.fname}}">
+                    <label for="firstName" class="">First name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-12 mb-2" style="display:none">
+
+                  <!--lastName-->
+                  <div class="md-form" style="display:none">
+                    <input type="text" name="lastName" id="lastName" value="{{user.lname}}" class="form-control">
+                    <label for="lastName" class="">Last name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+              <!--Username-->
+              {{!-- <div class="md-form input-group pl-0 mb-5">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="text" class="form-control py-0" placeholder="Username" aria-describedby="basic-addon1">
+              </div> --}}
+
+              <!--email-->
+              {{!-- <div class="md-form mb-5">
+                <input type="text" id="email" name="email" class="form-control" value="{{user.email}}">
+                <label for="email" class="">Email </label>
+              </div> --}}
+
+              <div class="row">
+                <div class="col-md-6 mb-2" style="display:none">
+
+                  <!--address-->
+                  <div class="md-form">
+                    <input type="text" id="email" name="email" class="form-control" value="{{user.email}}">
+                    <label for="email" class="">Email </label>
+                  </div>
+
+                </div>
+                <!--address-->
+
+                <div class="col-md-6 mb-2" style="display:none">
+
+                  <!--phone-->
+                  <div class="md-form ">
+                    <input type="hidden" name="addressid" id="addressid" class="form-control"
+                      value="{{this.address._id}}">
+                    <input type="text" name="phone" id="phone" class="form-control" value="{{user.phone}}">
+                    <label for="firstName" class="">Phone</label>
+                  </div>
+
+                </div>
+              </div>
+              <div class="md-form mb-2" style="display:none">
+                <input type="text" id="address" name="address" class="form-control" value="{{this.address.address}}"
+                  placeholder="1234 Main St">
+                <label for="address" class="">Address</label>
+              </div>
+
+
+              <!--Grid row-->
+              <div class="row" style="display:none">
+
+
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-12 col-md-12 mb-2">
+
+                  <label for="zip">Zip</label>
+                  <input type="text" class="form-control" name="zip" id="zip" value="{{this.address.zip}}"
+                    placeholder="" required>
+                  <input type="text" class="form-control" name="userId" value="{{user._id}}" hidden placeholder=""
+                    required>
+                  <div class="invalid-feedback">
+                    Zip code required.
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+
+
+              {{!-- <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="same-address">
+                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing
+                  address</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="save-info">
+                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+              </div> --}}
+
+
+              <div class="d-block my-1">
+                <div class="custom-control custom-radio">
+                  <input id="cod" name="paymentMethod" type="radio" value="COD" class="custom-control-input" checked>
+                  <label class="custom-control-label" for="cod">C O D</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input id="credit" name="paymentMethod" value="razorpay" type="radio" class="custom-control-input"
+                    >
+                  <label class="custom-control-label" for="credit">Razor Pay</label>
+                </div>
+                
+                <div class="custom-control custom-radio">
+                  <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input">
+                  <label class="custom-control-label" for="paypal">Pay-pal</label>
+                </div>
+              </div>
+
+              <div id="payment">
+                 <hr class="mb-4">
+                <button class="btn btn-primary bg-primary btn-lg btn-block text-info" id="ss" type="submit"
+                  >CHECKOUT</button>
+              </div>
+
+
+
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+
+
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+  </div>
+</main>
+<!--Main layout-->
+
+{{!--
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script> --}}
+{{!-- <button id="rzp-button1">Pay</button> --}}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+ 
+
+</script>

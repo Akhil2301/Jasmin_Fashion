@@ -1,0 +1,46 @@
+{{!-- <h1>{{title}}</h1>
+<p>Welcome to {{title}}</p> --}}
+<section class="pt-5">
+  <div class="text-center col-12 mt-5 pt-5">
+    <div class="container  center-div border w-25 py-5">
+      <div class="title pb-4">
+        <div class="">
+          <h2>Verify OTP</h2>
+        </div>
+        <span></span>
+      </div>
+      <form action="/changepass" method="post" enctype="application/x-www-form-urlencoded">
+
+       <div class="form-group py-2 ">
+          <input
+            type="password "
+            class="form-control "
+            placeholder="Password"
+            name="password" id="PasId" style="display: none;" value="{{name_body.npass}}"
+             
+          />
+          </div>
+        <div class="form-group py-2">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter The OTP"
+            name="OTP"
+          />
+         
+        </div>
+            
+        <div class="form-group py-4">
+            <button type="submit" class="btn btn-success btn-block  w-100">Submit</button>
+        </div> 
+        {{#if err_msg}}
+        <div> <span>Enter The Correct Otp</span></div>
+       
+         
+
+        {{/if}} 
+                    
+      </form>
+    </div>
+  </div>
+</section>

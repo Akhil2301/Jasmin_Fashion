@@ -1,0 +1,232 @@
+<main  class="my-5 pt-5 mb-5 pb-5">
+    <div class="container pt-5 pb-2 mb-5">
+
+
+
+        <!-- Breadcrumb Section End -->
+
+        <!-- Shop Section Begin -->
+        <section class="shop spad ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="shop__sidebar">
+
+                            <div class="shop_sidebar_accordion">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-heading ">
+                                            <strong><a data-toggle="collapse" class="px-5 bold"
+                                                    style="text-decoration: none; color:black"
+                                                    data-target="#collapseOne">CATAGORIES</a></strong>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="shop_sidebar_categories">
+                                                    <ul class="nice-scroll">
+                                                        {{#each headers}}
+                                                        <li style="list-style: none;"><a
+                                                                href="/categorysort/{{this._id}}"
+                                                                style="text-decoration:none;"
+                                                                class="text-secondary">{{this.category}}</a></li>
+                                                        {{/each}}
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <strong> <a data-toggle="collapse" class="px-5 bold"
+                                                    style="text-decoration: none; color:black"
+                                                    data-target="#collapseThree">Filter Price</a></strong>
+                                        </div>
+                                        <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="shop_sidebar_price">
+                                                    <ul style="list-style: none;">
+                                                        
+                                                        {{#when checkamount 'eq' -1}}
+                                                        <li><input type="radio" name="price" value="-1" checked
+                                                                id="price0"> <span class="text-secondary">All</span>
+                                                        </li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'noteq' -1}}
+                                                        <li><input type="radio" name="price" value="-1" id="price0">
+                                                            <span class="text-secondary">All</span>
+                                                        </li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'eq' 500}}
+                                                        <li><input type="radio" name="price" value="500" id="price1"
+                                                                checked> <span class="text-secondary"> ₹0.00
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;
+                                                                ₹500.00</span></li>
+                                                        {{/when}}
+
+                                                        {{#when checkamount 'noteq' 500}}
+                                                        <li><input type="radio" name="price" value="500" id="price1">
+                                                            <span class="text-secondary"> ₹0.00
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;
+                                                                ₹500.00</span>
+                                                        </li>
+                                                        {{/when}}
+
+                                                        {{#when checkamount 'eq' 1000}}
+                                                        <li><input type="radio" name="price" value="1000" id="price2"
+                                                                checked><span class="text-secondary">
+                                                                ₹500.00
+                                                                &nbsp; - ₹1000.00 </span></li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'noteq' 1000}}
+                                                        <li><input type="radio" name="price" value="1000"
+                                                                id="price2"><span class="text-secondary">
+                                                                ₹500.00
+                                                                &nbsp; - ₹1000.00 </span></li>
+
+                                                        {{/when}}
+                                                        {{#when checkamount 'eq' 1500}}
+                                                        <li><input type="radio" name="price" value="1500" id="id="
+                                                                price3"" checked><span class="text-secondary"> ₹1000.00
+                                                                -
+                                                                ₹1500.00</span></li>
+                                                        {{/when}}
+
+                                                        {{#when checkamount 'noteq' 1500}}
+                                                        <li><input type="radio" name="price" value="1500" id="id="
+                                                                price3""><span class="text-secondary"> ₹1000.00 -
+                                                                ₹1500.00</span></li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'eq' 1500}}
+                                                        <li><input type="radio" name="price" value="2000"
+                                                                id="price4" checked><span class="text-secondary" >
+                                                                ₹1500.00 -
+                                                                ₹2000.00</span></li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'noteq' 1500}}
+                                                        <li><input type="radio" name="price" value="2000"
+                                                                id="price4"><span class="text-secondary"> ₹1500.00 -
+                                                                ₹2000.00</span></li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'eq' 2499}}
+                                                        <li><input type="radio" name="price" value="2499" id="price5"
+                                                                checked><span class="text-secondary"> ₹2000.00 -
+                                                                ₹2500.00</span></li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'noteq' 2499}}
+                                                        <li><input type="radio" name="price" value="2499"
+                                                                id="price5"><span class="text-secondary"> ₹2000.00 -
+                                                                ₹2500.00</span></li>
+                                                        {{/when}}
+                                                        {{#when checkamount 'eq' 2500}}
+                                                        <li><input type="radio" name="price" value="2500"
+                                                                id="price6" checked><span class="text-secondary">
+                                                                ₹2500.00+</span></a></li>
+                                                        {{/when}}
+
+                                                         {{#when checkamount 'noteq' 2500}}
+                                                        <li><input type="radio" name="price" value="2500"
+                                                                id="price6"><span class="text-secondary">
+                                                                ₹2500.00+</span></a></li>
+                                                        {{/when}}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+
+                        <div class="row">
+                            {{#each a}}
+                            <div class="col-4 col-lg-4 col-md-4 mb-2 col-sm-12">
+
+                                <div class="card">
+                                    <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                                        data-mdb-ripple-color="light">
+                                        <a href="/product-details/{{this._id}}"><img src="/uploads/{{images.[0]}}"
+                                                class="w-100" style="height: 18rem;" /></a>
+                                        <a href="/product-details/{{this._id}}">
+                                            <div class="mask">
+                                                <div class="d-flex justify-content-start align-items-end h-100">
+
+                                                    {{#if status}}
+                                                    {{#if catoffstatus}}
+                                                    <h5><span class="badge bg-primary ms-2"> {{sum offerper
+                                                            catofferper}} % Off</span>
+                                                    </h5>
+                                                    {{else}}
+                                                    <h5><span class="badge bg-primary ms-2"> {{offerper}} % Off</span>
+                                                    </h5>
+                                                    {{/if}}
+
+                                                    {{else}}
+
+                                                    {{#if catoffstatus}}
+                                                    <h5><span class="badge bg-primary ms-2"> {{catofferper}} %
+                                                            Off</span></h5>
+                                                    {{else}}
+
+                                                    <h5><span class="badge bg-primary ms-2">0% off</span></h5>
+                                                    {{/if}}
+
+                                                    {{/if}}
+                                                </div>
+                                            </div>
+
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="/product-details/{{this._id}}" class="text-reset"
+                                            style="text-decoration: none;">
+                                            <h5 class="card-title mb-3">{{Name}}</h5>
+                                        </a>
+                                        {{!-- <a href="" class="text-reset">
+                                            <p>Category</p>
+                                        </a> --}}
+                                        {{#if status}}
+                                        {{#if catoffstatus}}
+                                        <s>&#x20B9; {{price}}</s><strong class="ms-2 text-danger"> &#x20B9;
+                                            {{total}}</strong>
+                                        {{else}}
+                                        <s>&#x20B9; {{price}}</s><strong class="ms-2 text-danger"> &#x20B9;
+                                            {{total}}</strong>
+                                        {{/if}}
+                                        {{else}}
+                                        {{#if catoffstatus}}
+                                        <s>&#x20B9; {{price}}</s><strong class="ms-2 text-danger"> &#x20B9;
+                                            {{total}}</strong>
+                                        {{else}}
+                                        <strong class="ms-2 text-danger"> &#x20B9; {{price}}</strong>
+                                        {{/if}}
+                                        {{/if}}
+                                    </div>
+                                    <div class="cart  align-items-center"> <button
+                                            class="btn btn-danger text-white btn-outline-primary fa fa-shopping-cart text-uppercase w-100"
+                                            onclick="addtocart('{{this._id}}')">Add to cart</button>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <!-- Shop Section End -->
+
+
+
+
+    </div>
+</main>
+

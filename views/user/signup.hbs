@@ -1,0 +1,83 @@
+<div class="main-content pt-5" style="top:3rem;bottom:7rem;">
+
+    <section class="pt-5">
+        <div class="container py-5 h-100 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong " style="border-radius:1rem;background-color: rgb(231, 221, 221);">
+                        <div class="card-body p-4 text-center">
+
+                            <h3 class="mb-3">Sign Up</h3>
+                            {{!-- <span style="color: red;" id="user_exist">{{err_msg}}</span> --}}
+                            {{#if err_msg}}
+                            <div class="alert alert-warning" id="error-alert">
+                                <button type="button" class="border-0" data-dismiss="alert">x</button>
+                                <strong>{{err_msg}}</strong>
+
+                            </div>
+                            {{/if}}
+                            <br>
+                            <br>
+                            <form action="/signup" method="post" name="myform">
+                                <div class="form-outline mb-3">
+
+                                    <input type="text" name="referal" id="referal" class="form-control form-control-lg"
+                                        placeholder="referal" value="{{referal_name}}" style="display:none ;" />
+                                    <s class="text-info"></s>
+
+                                </div>
+
+                                <div class="form-outline mb-3">
+
+                                    <input type="text" name="fname" id="fnames" class="form-control form-control-lg"
+                                        placeholder="First Name" />
+                                    <span id="errorfname" class="text-warning"></span>
+
+                                </div>
+                                <div class="form-outline mb-3">
+                                    <input type="text" name="lname" id="lname" class="form-control form-control-lg"
+                                        placeholder="Last Name" />
+                                    <span id="errorlname" class="text-warning"></span>
+
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="email" name="email" id="email" class="form-control form-control-lg"
+                                        placeholder="Email" />
+                                    <span id="erroremail" class="text-warning"></span>
+
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="text" name="phone" id="phone" class="form-control form-control-lg"
+                                        placeholder="Phone Number" />
+                                    <span id="errorphone" class="text-warning"></span>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="password" name="password" id="password"
+                                        class="form-control form-control-lg" placeholder="Password"
+                                        autocomplete="off" />
+                                    <span id="errorpassword" class="text-warning"></span>
+                                </div>
+
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" onclick="return validation(event)"
+                                        type="submit">Sign
+                                        Up</button>
+                                </div>
+
+                                <hr class="my-4">
+                                <a href="/login" class="justify-content-end" style="text-decoration: none;"><span
+                                        style="color: rgb(215, 42, 215);">Login?</span> All ready an Account</a>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

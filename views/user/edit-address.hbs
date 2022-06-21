@@ -1,0 +1,234 @@
+<section class="pt-5">
+    <div class="container pt-5">
+        <div class="main-body pt-5">
+
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                {{!-- <div class="containercrop"> --}}
+                                    <div class="group">
+                                        {{#if user.photo}}
+                                        <img src="{{user.photo}}" alt="" class="crop-image" id="crop-image">
+                                        {{else}}
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                                            class="crop-image" id="crop-image">
+                                        {{/if}}
+                                        <input type="file" name="input-file" id="input-file"
+                                            accept=".png,.jpg,.jpeg,.webp">
+                                        <label for="input-file" class="label-file">Change Image</label>
+                                    </div>
+                                    {{!--
+                                </div> --}}
+
+                                <!-- Modal para cortar imagen -->
+
+                                <div class="modalcrop mt-5">
+                                    <div class="modalcrop-content">
+                                        {{!-- <form action="/crop-images" method="post"> --}}
+                                            <div class="modalcrop-header">
+                                                <p class="text-primary">Crop Image</p>
+                                            </div>
+                                            <div class="modalcrop-body">
+                                                <div class="content-imagen-cropper">
+                                                    <img src="" alt="" class="img-cropper" id="img-cropper">
+                                                </div>
+                                                <div class="content-imagen-sample">
+                                                    <div src="" alt="" class="img-sample" id="img-croppered"></div>
+                                                </div>
+                                            </div>
+                                            <div class="modalcrop-footer">
+                                                <input type="hidden" value="{{user._id}}" id="userval" />
+                                                <button type="submit" class="btn primary" id="cut">Crop</button>
+                                                <button class="btn secundary" id="close">Cancel</button>
+                                            </div>
+                                            {{!--
+                                        </form> --}}
+                                    </div>
+                                </div>
+
+
+                                <div class="mt-3">
+                                    <h4>{{user.fname}} {{user.lname}}</h4>
+                                    {{!-- <p class="text-secondary mb-1">Full Stack Developer</p>
+                                    <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p> --}}
+                                    {{!-- <button class="btn btn-primary">Follow</button>
+                                    <button class="btn btn-outline-primary">Message</button> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/userpage" style="text-decoration:none ;" class="mb-0">My Account</a>
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/orders" style="text-decoration:none ;" class="mb-0">Orders</a>
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/Editprofie/{{user._id}}" style="text-decoration:none ;" class="mb-0">Edit
+                                    profie</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/changepassword" style="text-decoration:none ;" class="mb-0">Change
+                                    Password</a>
+                                <span class="text-secondary"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/address" style="text-decoration:none ;" class="mb-0">Address</a>
+                                <span class="text-secondary"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/referalcode" style="text-decoration:none ;" class="mb-0">Referal Code</a>
+                                <span class="text-secondary"></span>
+                            </li>
+                            {{!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="/wallet" style="text-decoration:none ;" class="mb-0">Wallet</a>
+                                <span class="text-secondary"></span>
+                            </li> --}}
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"> Address</h5>
+
+                                <!-- Vertical Form -->
+                                <form class="row g-3" id="Addressedit" action="/Edit-Address/{{address._id}}" method="post">
+
+                                    <div class="col-12">
+                                        <label for="inputEmail4" class="form-label">Address</label>
+                                        <input type="text" name="address" class="form-control" id="addressedit"
+                                            value="{{address.address}}">
+                                            <span id="erroreaddress" class="text-warning"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="inputEmail4" class="form-label">City</label>
+                                        <input type="text" name="city" class="form-control" id="cityedit"
+                                            value="{{address.city}}">
+                                            <span id="errorecity" class="text-warning"></span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="inputEmail4" class="form-label">zip</label>
+                                        <input type="text" name="zip" class="form-control" id="zipedit"
+                                            value="{{address.zip}}">
+                                             <span id="errorezip" class="text-warning"></span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        {{#when address.saveaddress 'eq' "Home"}}
+                                        <span><input name="saveaddress" type="radio" value="Home" checked>
+                                            Home</span>
+                                        <span><input name="saveaddress" type="radio" value="Office"> Office</span>
+                                        <span><input name="saveaddress" type="radio" value="Other"> Other</span>
+                                        {{/when}}
+                                        {{#when address.saveaddress 'eq' "Office"}}
+                                        <span><input name="saveaddress" type="radio" value="Home">
+                                            Home</span>
+                                        <span><input name="saveaddress" type="radio" value="Office" checked> Office</span>
+                                        <span><input name="saveaddress" type="radio" value="Other"> Other</span>
+                                        {{/when}}
+                                        {{#when address.saveaddress 'eq' "Other"}}
+                                        <span><input name="saveaddress" type="radio" value="Home">
+                                            Home</span>
+                                        <span><input name="saveaddress" type="radio" value="Office"> Office</span>
+                                        <span><input name="saveaddress" type="radio" value="Other" checked> Other</span>
+                                        {{/when}}
+                                        <span><input name="check" type="checkbox" value="checked" {{address.check}}> Save As
+                                            Default</span>
+                                        <input name="userId" type="hidden" value="{{address.userId}}">
+                                    </div>
+
+                                    <div class="">
+                                        <button type="submit" class="btn btn-primary" onclick="return validateaddress(event)">Save</button>
+
+                                    </div>
+                                </form><!-- Vertical Form -->
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+    /*************validate Address ******/
+ 
+
+
+
+
+  
+/******* End ******/
+
+/*************validate Address ******/
+const formedit = document.getElementById('Addressedit')
+
+
+
+    
+formedit.addEventListener('submit', (ev) => {
+    const addressedit = document.getElementById('addressedit').value
+    const cityedit = document.getElementById('cityedit').value
+    const zipedit = document.getElementById('zipedit').value
+
+
+     if (zipedit == '') {
+     
+       document.getElementById('errorezip').innerHTML = 'Zip Required ..!';
+        ev.preventDefault()
+
+    } else {
+        document.getElementById('errorezip').innerHTML = '';
+    }
+
+
+
+    if (addressedit == '') {
+       
+       document.getElementById('erroreaddress').innerHTML = 'Address Required ..!';
+        ev.preventDefault()
+
+    } else {
+        document.getElementById('erroreaddress').innerHTML = '';
+    }
+  
+    if (cityedit == '') {
+       
+       document.getElementById('errorecity').innerHTML = 'City Required ..!';
+        ev.preventDefault()
+
+    } else {
+        document.getElementById('erroreCity').innerHTML = '';
+    }
+
+
+
+    
+
+
+})
+/******* End ******/
+
+
+
+</script>

@@ -1,0 +1,106 @@
+<main id="main" class="main">
+
+
+    <section class="section dashboard">
+        <div class="row">
+
+
+            <section class="section">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Category Table</h5>
+
+                                <!-- Default Table -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Category</th>
+                                             <th scope="col">offer Per</th>
+                                           <th scope="col">offer Status</th>
+                                           {{!-- <th scope="col">Start Date</th> --}}
+                                          
+                                            <th scope="col">Action</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {{#each categorylist}}
+                                        <tr>
+                                            <th scope="row">{{inc @index}}</th>
+                                            <td>{{category}}</td>
+                                            <td>{{offerper}}</td>
+                                            <td>{{status}}</td>
+                                            {{!-- <td>{{strdate}}</td> --}}
+                                            
+                                            {{#if status}}
+                                             <td><a class="btn btn-danger" href="/admin/delete-categoryoff/{{this._id}}"
+                                                    onclick="confirmation(event)" >Remove Offer</a>
+                                            </td>
+                                            {{else}}
+                                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal"
+                                                    data-bs-whatever="@mdo">Update Offer </button>
+
+
+
+                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Update Off</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form  action="/admin/categoryoff/{{this._id}}"
+                                                                    method="post">
+                                                                    <div class="mb-3">
+                                                                        <label for="recipient-name"
+                                                                            class="col-form-label">Offer
+                                                                            Per:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="categoryoffper" id="{{inc @index}}"
+                                                                            >
+                                                                        <span class="text-warning"
+                                                                            id="errcat{{inc @index}}"></span>
+                                                                    </div>
+                                                                    
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" id="submit"
+                                                                            class="btn btn-primary" onclick="return removecatoff(event,'{{inc @index}}','errcat{{inc @index}}')">Save</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                           {{/if}}
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                <!-- End Default Table Example -->
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+

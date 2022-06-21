@@ -1,0 +1,165 @@
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Users</h5>
+
+
+                            <!-- Table with stripped rows -->
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Status</th>                                       
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Block</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each userlist}}
+                                    <tr>
+                                        <th scope="row">{{inc @index}}</th>
+                                        <td>{{fname}}</td>
+                                        <td>{{lname}}</td>
+                                        <td>{{email}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{status}}</td>                                        
+                                        <td>
+                                           <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal{{this._id}}" data-bs-whatever="@mdo">Edit
+                                            </button>
+
+
+                                            <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/admin/edit-user/{{this._id}}"
+                                                                method="post">
+                                                                <div class="mb-3">
+                                                                    <label for="recipient-name"
+                                                                        class="col-form-label">First
+                                                                        Name:</label>
+                                                                    <input type="text" class="form-control" name="fname"
+                                                                        id="fname" value="{{fname}}">
+                                                                    <span style="color: red;" id="Name-error"></span>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="recipient-name"
+                                                                        class="col-form-label">Last
+                                                                        Name:</label>
+                                                                    <input type="text" class="form-control" name="lname"
+                                                                        id="lname" value="{{lname}}">
+                                                                    <span style="color: red;" id="Name-error"></span>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" id="submit"
+                                                                        class="btn btn-primary">Save</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                           {{!-- <a class="btn btn-danger" href="/admin/delete-product/{{this._id}}"
+                                                    onclick="confirmation(event)">Delete --}}
+
+
+                                                      {{#if status}} <a href="/admin/delete-user/{{this._id}}/false" class="btn btn-danger" onclick="confirmation(event)">block
+                                                      {{else}}</a><a href="/admin/delete-user/{{this._id}}/true" class="btn btn-danger" onclick="confirmation1(event)">Un block</a>
+                                                      {{/if}}
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </section>
+
+</main><!-- End #main -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
+
+    function confirmation(ev) {
+
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+
+        swal({
+            title: "Are you sure?",
+            text: "Are You want to Block",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+                if (willDelete) {
+                    swal("User Is Blocked!", {
+                        icon: "success",
+
+                    });
+                    location.href = urlToRedirect
+                } else {
+
+                    swal("Ok.....!");
+
+                }
+            });
+    }
+
+    function confirmation1(ev) {
+
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+
+        swal({
+            title: "Are you sure?",
+            text: "Are You want to Un Block",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+                if (willDelete) {
+                    swal("User Is Blocked!", {
+                        icon: "success",
+
+                    });
+                    location.href = urlToRedirect
+                } else {
+
+                    swal("Ok.....!");
+
+                }
+            });
+    }
+</script>
