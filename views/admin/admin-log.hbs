@@ -3,13 +3,13 @@
 
     <section class="section mt-5">
         <div class="container h-100">
-            <div class="row mx-5 ">
+            <div class="row ">
 
-                <div class="col-12 col-md-8 col-lg-6  col-xl-6 mt-5 ms-5">
+                <div class="col-12 col-md-8 col-lg-6  col-xl-6 mt-5">
                     <div class="card shadow-2-strong " style="border-radius:1rem;background-color: rgb(231, 221, 221);">
-                        <div class="card-body p-4 text-center">
+                        <div class="card-body text-center ">
 
-                            <h3 class="mb-3">Sign in</h3>
+                            <h3 class="mb-3 mt-5">Sign in</h3>
                             <form action="/admin/" method="post">
                                 <div class="form-outline mb-3">
                                     <input type="email" name="email" id="email" class="form-control form-control-lg"
@@ -29,8 +29,8 @@
                                 </div>
                                 <span style="color: #f40707;">{{err_msg}}</span>
                                 <hr class="my-4">
-                                <a href="/forgottpass" class="justify-content-end" style="text-decoration: none;"><span
-                                        style="color: rgb(215, 42, 215);">forgot Password?</span></a>
+                                {{!-- <a href="/forgottpass" class="justify-content-end" style="text-decoration: none;"><span
+                                        style="color: rgb(215, 42, 215);">forgot Password?</span></a> --}}
                             </form>
                         </div>
                     </div>

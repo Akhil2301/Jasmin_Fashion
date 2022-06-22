@@ -151,7 +151,7 @@ router.get('/signup',async function (req, res) {
 /*Post Signup Page.*/
 router.post('/signup', async (req, res) => {
 
-   
+   try{
         headers=await userHelper.getHeader()
         if (req.body.email != undefined && req.body.phone != undefined && req.body.fname != undefined && req.body.lname != undefined && req.body.phone != undefined && req.body.password != undefined) {
             let email = await userHelper.emailcheck(req.body)
@@ -181,14 +181,17 @@ router.post('/signup', async (req, res) => {
     
         }
    
+    }catch{
+    res.redirect('/404')
 
+    }
 
 });
 
 
 /*Post Signup Page.*/
 router.post('/otp', async (req, res) => {
-    
+    try{
     client.verify.services(serviceid).verificationChecks.create({
             to: `+91${
             req.body.phone
@@ -210,18 +213,27 @@ router.post('/otp', async (req, res) => {
         headers=await userHelper.getHeader()
         res.render('user/signup', {err_msg: "Invalid Otp ..!",headers})
     });
+    }catch{
+    res.redirect('/404') 
 
+    }
 })
 
 /****** logout page*******/
 
 router.get('/logout', verifyLogin, (req, res, next) => {
-    req.session.destroy()
+    try{
+        req.session.destroy()
     res.redirect('/')
+    }catch{
+        res.redirect('/404') 
+    }
+    
 })
 
 
 router.get('/product-details/:id', verifyLogin, cartcnt, async (req, res, next) => {
+    try{
     headers=await userHelper.getHeader()
     cartCount = req.session.cartCount
     let product = await productHelpers.getProductDetails(req.params.id)
@@ -232,22 +244,28 @@ router.get('/product-details/:id', verifyLogin, cartcnt, async (req, res, next) 
         cartCount,
         headers
     });
-
+    }catch{
+        res.redirect('/404') 
+    }
 })
 
 
 router.get('/add-to-cart/:id', cartcnt, verifyLogin, async(req, res) => {
+    try{
     headers=await userHelper.getHeader()
     userHelper.addToCart(req.params.id, req.session.user._id).then(async (response) => { // res.redirect('/cart')
         cartCount = await userHelper.getCartCount(req.session.user._id)
         cartCount = req.session.cartCount
         res.json({status: true, cartCount,headers})
     })
-
+    }catch{
+        res.redirect('/404') 
+    }
 })
 
 
 router.get('/cart', verifyLogin, cartcnt, async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     let user = req.session.user
     headers=await userHelper.getHeader()
@@ -287,16 +305,21 @@ router.get('/cart', verifyLogin, cartcnt, async (req, res) => {
         headers
 
     })
-
+    }catch{
+        res.redirect('/404') 
+    }
 })
 
 
 /*******************address form ********** */
 router.get('/add-address', cartcnt, verifyLogin, async (req, res) => {
+    try{
     let totalamount = await userHelper.getTotalAmount(req.session.user._id)
     headers=await userHelper.getHeader()
     res.render('user/add-address', {totalamount, cartCount, user: req.session.user,headers});
-
+    }catch{
+        res.redirect('/404') 
+    }
 
 })
 
@@ -307,7 +330,7 @@ router.get('/add-address', cartcnt, verifyLogin, async (req, res) => {
 
 /*******************address form post ********** */
 router.post('/add-address', cartcnt, verifyLogin, (req, res) => {
-
+try{
     userHelper.addadress(req.body).then(async (response) => {
         cartCount = req.session.cartCount
         let user = req.session.user
@@ -328,11 +351,14 @@ router.post('/add-address', cartcnt, verifyLogin, (req, res) => {
             headers
         })
     })
-
+}catch{
+    res.redirect('/404') 
+}
 
 })
 
 router.get('/Edit-Address/:addreessId', cartcnt, verifyLogin, async(req, res) => {
+    try{
     cartCount = req.session.cartCount
     let user = req.session.user
     let address = await userHelper.getAddressbyid(req.params.addreessId)
@@ -343,34 +369,40 @@ router.get('/Edit-Address/:addreessId', cartcnt, verifyLogin, async(req, res) =>
         address,
         headers
     })
-
+    }catch{
+        res.redirect('/404') 
+    }
 })
 
 router.get('/delete-Address/:id', verifyLogin, async (req, res) => {
-
+try{
     userHelper.deleteAddress(req.params.id).then((response) => {
 
         res.redirect('/address');
 
     })
-
+}catch{
+    res.redirect('/404') ;
+}
 })
 
 
 
 router.post('/Edit-Address/:addreessId', cartcnt, verifyLogin, (req, res) => {
-
+try{
     userHelper.updateAddress(req.params.addreessId,req.body).then((response)=>{ 
         
         res.redirect('/address')
     })
-
+}catch{
+    res.redirect('/404') 
+}
 })
 
 
 /*** add address Userpage */
 router.post('/add-addressuser', cartcnt, verifyLogin, (req, res) => {
-
+try{
     userHelper.addadress(req.body).then(async (response) => {
         cartCount = req.session.cartCount
         
@@ -378,7 +410,9 @@ router.post('/add-addressuser', cartcnt, verifyLogin, (req, res) => {
         let address = await userHelper.getAddress(req.session.user._id)
         res.redirect('/address')
     })
-
+}catch{
+    res.redirect('/404') 
+}
 
 })
 
@@ -388,6 +422,7 @@ router.post('/add-addressuser', cartcnt, verifyLogin, (req, res) => {
 
 /*******************Change product quantity********** */
 router.post('/change-product-quantity', verifyLogin, cartcnt, async (req, res, next) => { // console.log("hhh")
+    try{
     let productcount = await userHelper.productcount(req.body.cart)
     // console.log(productcount)
     userHelper.changeProductQuantity(req.body, productcount).then(async (response) => {
@@ -395,23 +430,31 @@ router.post('/change-product-quantity', verifyLogin, cartcnt, async (req, res, n
         res.json(response)
 
     })
+}
+catch{
+    res.redirect('/404') 
+}
 })
 
 
 /*******************Remove product ********** */
 router.post('/remove-product', verifyLogin, cartcnt, (req, res, next) => {
-
+try{
     userHelper.removeProduct(req.body).then((response) => {
         return new Promise((resolve, reject) => {
             res.json(response)
         })
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 /*******************remove product  End ********** */
 
 /*******************place order ********** */
 router.post('/place-orders', verifyLogin, cartcnt, async (req, res) => {
+    try{
     //console.log(req.body.selectAddress)
     // const addressid=req.body.addressid
     let cartItem=await userHelpers.cartItem(req.session.user._id)
@@ -445,7 +488,9 @@ router.post('/place-orders', verifyLogin, cartcnt, async (req, res) => {
         cartItem,
         headers
     })
-
+    }catch{
+        res.redirect('/404') 
+    }
 
 })
 
@@ -453,7 +498,7 @@ router.post('/place-orders', verifyLogin, cartcnt, async (req, res) => {
 
 
 router.post('/place-order', verifyLogin, async (req, res) => {
-
+try{
     let cartItem=await userHelpers.cartItem(req.body.userId)
     let products = await userHelper.getCartProductList(req.body.userId)
     let total_Price = await userHelper.getTotalAmount(req.body.userId)
@@ -526,12 +571,15 @@ router.post('/place-order', verifyLogin, async (req, res) => {
 
         })
     }
-
+}catch{
+    res.redirect('/404') 
+}
 
 })
 router.get('/success/:id/:addressid', cartcnt, verifyLogin, async (req, res) => {
     // res.json(response)
     // console.log("hi paypal")
+    try{
     let cartItem=await userHelpers.cartItem(req.params.id)
 
     let products = await userHelper.getCartProductList(req.params.id)
@@ -580,12 +628,15 @@ router.get('/success/:id/:addressid', cartcnt, verifyLogin, async (req, res) => 
     })
     // console.log(req.params.id)
     // console.log(req.query)
-
+    }catch{
+        res.redirect('/404') 
+    }
 
 })
 
 
 router.get('/order-success', cartcnt, verifyLogin, async(req, res) => {
+    try{
     cartCount = req.session.cartCount
     headers=await userHelper.getHeader()
     res.render('user/order-success', {
@@ -595,9 +646,13 @@ router.get('/order-success', cartcnt, verifyLogin, async(req, res) => {
         headers
 
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 router.get('/orders', cartcnt, verifyLogin, async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     let orders = await userHelper.getOrderList(req.session.user._id)
     headers=await userHelper.getHeader()
@@ -609,9 +664,14 @@ router.get('/orders', cartcnt, verifyLogin, async (req, res) => {
         headers,
         status: 'false'
     })
+}
+catch{
+    res.redirect('/404') 
+}
 })
 
 router.get('/orderdetail/:id', cartcnt, verifyLogin, async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     let orders = await userHelper.getOrderDetail(req.params.id,req.session.user._id)
     headers=await userHelper.getHeader()
@@ -622,37 +682,52 @@ router.get('/orderdetail/:id', cartcnt, verifyLogin, async (req, res) => {
         status: 'false',
         headers
     })
+}
+catch{
+    res.redirect('/404') 
+}
 })
 
 router.post('/orderpdf', cartcnt, verifyLogin, async (req, res) => {
+    try{
     cartCount = req.session.cartCount
  await userHelper.getOrderDetail(req.body.userid,req.session.user._id).then((response)=>{
     
     res.json(response)
     })
-     
+}catch{
+    res.redirect('/404') 
+}
    
 })
 
 
 router.get('/userpage', cartcnt, verifyLogin, async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     let address = await userHelper.getAddress(req.session.user._id)
     let user = await userHelper.getUsertDetails(req.session.user._id)
     headers=await userHelper.getHeader()
     res.render('user/userpage', {user, cartCount, address,headers})
+    }
+    catch{
+        res.redirect('/404') 
+    }
 })
 router.get('/Editprofie/:id', cartcnt, verifyLogin, async (req, res) => {
-
+try{
     cartCount = req.session.cartCount
     // let userDetail=await userHelper.getUsertDetails(req.params.id)
     headers=await userHelper.getHeader()
     let user = await userHelper.getUsertDetails(req.session.user._id)
     res.render('user/edit-profile', {user, cartCount,headers});
-
+}catch{
+    res.redirect('/404') 
+}
 })
 
 router.post('/edit-profile/:pid', cartcnt, verifyLogin, (req, res) => {
+    try{
     cartCount = req.session.cartCount
 
 
@@ -666,20 +741,28 @@ router.post('/edit-profile/:pid', cartcnt, verifyLogin, (req, res) => {
         res.redirect('/userpage')
 
     })
+}
+catch{
+    res.redirect('/404') 
+}
 })
 
 
 router.get('/cancel-order/:pid', cartcnt, verifyLogin, (req, res) => {
-
+  try{
     userHelper.updateOrderStaus(req.params.pid).then(() => {
         res.redirect('/order-success')
 
 
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 
 router.get('/changepassword', cartcnt, verifyLogin, async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     let user = await userHelper.getUsertDetails(req.session.user._id)
     headers=await userHelper.getHeader()
@@ -688,10 +771,13 @@ router.get('/changepassword', cartcnt, verifyLogin, async (req, res) => {
         cartCount,
         headers
     })
-
+    }catch{
+        res.redirect('/404') 
+    }
 })
 
 router.get('/address', cartcnt, verifyLogin, async (req, res) => {
+ try{
     cartCount = req.session.cartCount
     let address = await userHelper.getAddress(req.session.user._id)
     headers=await userHelper.getHeader()
@@ -701,10 +787,13 @@ router.get('/address', cartcnt, verifyLogin, async (req, res) => {
         address,
         headers
     })
-
+ }catch{
+    res.redirect('/404') 
+ }
 })
 
 router.post('/changepassword', cartcnt, verifyLogin, async (req, res) => {
+    try{
     cartCount = req.session.cartCount;
     headers=await userHelper.getHeader()
     userHelper.chekChangePassword(req.session.user, req.body).then((response) => {
@@ -722,13 +811,15 @@ router.post('/changepassword', cartcnt, verifyLogin, async (req, res) => {
     }).catch((error) => {
         res.render('user/change-password', {err_msg: "Please Retry after sometimes",headers})
     })
-
+    }catch{
+        res.redirect('/404') 
+    }
 
 })
 
 
 router.post('/changepass', cartcnt, verifyLogin, (req, res) => {
-
+try{
     client.verify.services(serviceid).verificationChecks.create({
             to: `+91${
             req.session.user.phone
@@ -743,11 +834,15 @@ router.post('/changepass', cartcnt, verifyLogin, (req, res) => {
             res.redirect('/userpage')
         })
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 router.post('/verify-payment', verifyLogin, cartcnt, async (req, res) => {
     // console.log(req.body)
      //console.log(req.body.order.data.userId)
+     try{
      let cartItem=await userHelpers.cartItem(req.body.order.data.userId)
     let products = await userHelper.getCartProductList(req.body.order.data.userId)
     let total_Price = await userHelper.getTotalAmount(req.body.order.data.userId)
@@ -809,9 +904,13 @@ router.post('/verify-payment', verifyLogin, cartcnt, async (req, res) => {
         console.log('eee' + err)
         res.json({status: false, err_msg: 'Some Error'})
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 router.get('/crop-images/:id',verifyLogin, cartcnt,async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     user = req.params.id
     headers=await userHelper.getHeader()
@@ -821,19 +920,27 @@ router.get('/crop-images/:id',verifyLogin, cartcnt,async (req, res) => {
         cartCount,
         headers
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 router.post('/crop-images', (req, res) => { // console.log("ggg")
+    try{
     let user = req.body.user
     let image = req.body.image
     // console.log(req.body)
     userHelpers.profilePicChange(user, image).then(() => {
         res.redirect('/userpage')
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 
 router.post('/applycoupon',cartcnt, verifyLogin, async (req, res) => { // console.log(req.body)
+    try{
     let coupon = await userHelper.getCartcoupon(req.body.enteredcoupon)
     let coupondata=await userHelper.getCartcoupondata_use(req.body.userid)
  //console.log(req.body.userid)
@@ -864,11 +971,14 @@ router.post('/applycoupon',cartcnt, verifyLogin, async (req, res) => { // consol
         res.json({status: false})
     }
 
-
+    }catch{
+        res.redirect('/404') 
+    }
 })
 
 
 router.post('/removeCoupon',cartcnt, verifyLogin, (req, res) => { // console.log((req.body));
+    try{
     userHelpers.removeCoupon(req.body.userid, req.body.coupid).then(async (response) => {
         
         userHelpers.removecoupnid(req.body.userid, req.body.coupid).then(async (response) => {
@@ -876,10 +986,14 @@ router.post('/removeCoupon',cartcnt, verifyLogin, (req, res) => { // console.log
         })
 
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 
 router.get('/referalcode',cartcnt, verifyLogin,async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     let referalamount=await productHelpers.refamount()
     headers=await userHelper.getHeader()
@@ -890,12 +1004,15 @@ router.get('/referalcode',cartcnt, verifyLogin,async (req, res) => {
         referalamount:referalamount,
         headers
     })
+}catch{
+    res.redirect('/404') 
+}
 })
 
 
 router.post('/getcoupon',cartcnt, verifyLogin,async (req, res) => {
    // cartCount = req.session.cartCount
-   
+   try{
    let coupon = await userHelper.getCartcoupondata(req.body.userid)
 //console.log(coupon)
    if (coupon){
@@ -904,29 +1021,36 @@ router.post('/getcoupon',cartcnt, verifyLogin,async (req, res) => {
   else{
     res.json({status:true})
   }
-   
+}catch{
+    res.redirect('/404') 
+}
 })
 
 router.post('/wallet',cartcnt, verifyLogin,async (req, res) => {
-   
+   try{
     userHelpers.walletApply(req.body).then((response) => { // console.log(response);
         res.json(response)
     })
- 
+}catch{
+    res.redirect('/404') 
+}
     
  })
 
 
  router.post('/walletremove',cartcnt, verifyLogin, (req, res) => {
-   
+   try{
     userHelpers.walletremove(req.body).then((response) => { // console.log(response);
         res.json(response)
     })
- 
+}catch{
+    res.redirect('/404') 
+}
     
  })
 
  router.get('/shop',cartcnt, verifyLogin,async (req, res) => {
+    try{
     cartCount = req.session.cartCount
     
     headers=await userHelper.getHeader()
@@ -940,11 +1064,14 @@ router.post('/wallet',cartcnt, verifyLogin,async (req, res) => {
 
    
 })
-     
+}catch{
+    res.redirect('/404') 
+}    
 })
 
 
 router.get('/categorysort/:id',cartcnt, verifyLogin,async (req, res) => {
+    try{
     cartCount = req.session.cartCount
    
     headers=await userHelper.getHeader()
@@ -956,10 +1083,14 @@ router.get('/categorysort/:id',cartcnt, verifyLogin,async (req, res) => {
             res.render('user/shop', {a, cartCount, user: req.session.user,headers});
 
        
-    })    
+    })  
+}catch{
+    res.redirect('/404') 
+}  
 })
 
 router.get('/shopsort/:price',cartcnt, verifyLogin,async (req, res) => {
+    try{
         cartCount = req.session.cartCount
        
         headers=await userHelper.getHeader()
@@ -984,7 +1115,9 @@ router.get('/shopsort/:price',cartcnt, verifyLogin,async (req, res) => {
        
     })
     }
-         
+}catch{
+    res.redirect('/404') 
+}     
      
 })
 

@@ -973,8 +973,8 @@ module.exports = {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": `http://localhost:5000/success/${order.userId}/${order.addressid}?paymentMethod=${order.paymentMethod}&receipt=${order.receipt}&phone=${order.phone}`,
-                    "cancel_url": "http://localhost:5000/cart"
+                    "return_url": `http://localhost:3000/success/${order.userId}/${order.addressid}?paymentMethod=${order.paymentMethod}&receipt=${order.receipt}&phone=${order.phone}`,
+                    "cancel_url": "http://localhost:3000/cart"
                 },
                 "transactions": [
                     {

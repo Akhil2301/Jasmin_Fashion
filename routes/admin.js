@@ -34,7 +34,7 @@ const verifyLogin = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', async (req, res, next) =>{
-
+try{
     if (req.session.admin) {
         let totalorder= await adminHelpers.totalorder();
         let totalsale= await adminHelpers.totalsale()
@@ -62,11 +62,14 @@ router.get('/', async (req, res, next) =>{
 
         res.render('admin/admin-log', {admins: true,ad_log:false});
     }
+  }catch{
+    res.redirect('/404')
+  }
 });
 
 /*post login Page.*/
 router.post('/', function (req, res, next) {
-
+try{
     adminHelpers.doLogin(req.body).then((response) => {
         if (response.status) {
 
@@ -94,20 +97,26 @@ router.post('/', function (req, res, next) {
 
         }
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 });
 
 
 /****** logout page*******/
 
 router.get('/logout', verifyLogin, (req, res, next) => {
+  try{
     req.session.destroy()
     res.redirect('/admin/')
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Add category ****************/
 router.get('/category', verifyLogin, async (req, res, next) => {
-
+try{
     let categorylist = await productHelper.viewcategory()
     let brandlist = await productHelper.viewbrand()
     let subcategorylist = await productHelper.viewsubcategory()
@@ -121,6 +130,9 @@ router.get('/category', verifyLogin, async (req, res, next) => {
         admin: req.session.admin,
         ad_log:true
     })
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Add category end ****************/
@@ -128,33 +140,40 @@ router.get('/category', verifyLogin, async (req, res, next) => {
 
 /*******  Add category post ****************/
 router.post('/category', verifyLogin, (req, res) => {
-
+try{
     productHelper.Category(req.body).then((response) => {
         res.redirect('/admin/category')
     })
+  }catch{
+    res.redirect('/404')
+  }
 })
 /*******  Add category post end ****************/
 
 /*******  Edit category  ****************/
 router.post('/edit-category/:id', verifyLogin, async (req, res) => {
-
+try{
     productHelper.updateCategory(req.params.id, req.body).then((response) => {
         res.redirect('/admin/category')
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Edit category  end ****************/
 /*******  delete category  start ****************/
 
 router.get('/delete-category/:id', verifyLogin, async (req, res) => {
-
+try{
     productHelper.deletecategory(req.params.id).then((response) => {
 
         res.redirect('/admin/category');
 
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  delete category  end ****************/
@@ -162,20 +181,26 @@ router.get('/delete-category/:id', verifyLogin, async (req, res) => {
 
 /*******  Add Brand ****************/
 router.post('/brand', verifyLogin, async (req, res) => {
+  try{
     productHelper.Brand(req.body).then((response) => {
         res.redirect('/admin/category')
     })
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Add Brand end ****************/
 
 /*******  Edit brand  ****************/
 router.post('/edit-brand/:id', verifyLogin, async (req, res) => {
-
+try{
     productHelper.updatebrand(req.params.id, req.body).then((response) => {
         res.redirect('/admin/category')
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Edit brand  end ****************/
@@ -183,24 +208,30 @@ router.post('/edit-brand/:id', verifyLogin, async (req, res) => {
 /*******  delete category  start ****************/
 
 router.get('/delete-brand/:id', verifyLogin, async (req, res) => {
-
+try{
     productHelper.deletebrand(req.params.id).then((response) => {
 
         res.redirect('/admin/category');
 
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  delete category  end ****************/
 
 /*******  Add Sub category ****************/
 router.post('/subcategory', verifyLogin, async (req, res) => {
+  try{
     req.body.catagoryId = ObjectId(req.body.catagoryId)
 
     productHelper.Subcategory(req.body).then((response) => {
         res.redirect('/admin/category')
     })
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Edit sub category start ****************/
@@ -209,10 +240,13 @@ router.post('/subcategory', verifyLogin, async (req, res) => {
 router.post('/edit-subcategory/:id', verifyLogin, async (req, res) => {
     //console.log(req.params.id)
    // console.log(req.body)
+   try{
     productHelper.updatesubcategory(req.params.id, req.body).then((response) => {
         res.redirect('/admin/category')
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  Edit sub  end ****************/
@@ -220,13 +254,15 @@ router.post('/edit-subcategory/:id', verifyLogin, async (req, res) => {
 /*******  delete category  start ****************/
 
 router.get('/delete-subcategory/:id', verifyLogin, async (req, res) => {
-
+try{
     productHelper.deletesubCategory(req.params.id).then((response) => {
 
         res.redirect('/admin/category');
 
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 /*******  delete category  end ****************/
@@ -234,6 +270,7 @@ router.get('/delete-subcategory/:id', verifyLogin, async (req, res) => {
 
 /************ View product *******/
 router.get('/product', verifyLogin,async(req, res, next)=> {
+  try{
     let categorylist = await productHelper.viewcategory()
     let brandlist = await productHelper.viewbrand()
     let subcategorylist = await productHelper.viewsubcategorylist()
@@ -252,10 +289,12 @@ router.get('/product', verifyLogin,async(req, res, next)=> {
     })).catch((err) => {
         console.log(`error${err}`)
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 });
 router.post('/product',verifyLogin,upload.array('image',12),(req,res)=>{
-
+try{
     let arr=[]
 
     req.files.forEach(function(files,index,ar){     
@@ -268,22 +307,26 @@ router.post('/product',verifyLogin,upload.array('image',12),(req,res)=>{
      res.redirect('/admin/product')
      
    })
- 
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 
 router.post('/edit-product/:id',verifyLogin,async(req,res)=>{  
    
-     
+     try{
     productHelper.updateProduct(req.params.id,req.body).then((response)=>{
         res.redirect('/admin/product')})
      
-  
+    }catch{
+      res.redirect('/404')
+    }
   })
 
 
   router.post('/edit-image/:id',verifyLogin,upload.array('images',12),(req,res)=>{
- 
+ try{
     let arr=[]
     req.files.forEach((files,index,array)=>{
     
@@ -295,17 +338,22 @@ router.post('/edit-product/:id',verifyLogin,async(req,res)=>{
         res.redirect('/admin/product')
     
       })
+    }catch{
+      res.redirect('/404')
+    }
   })
 
 
   router.get('/delete-product/:id', verifyLogin, async (req, res) => {
-
+try{
     productHelper.deleteproduct(req.params.id).then((response) => {
 
         res.redirect('/admin/product');
 
     })
-
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 router.get('/user',verifyLogin,(req,res)=>{
@@ -321,22 +369,27 @@ router.get('/user',verifyLogin,(req,res)=>{
         })       
      
     })).catch((err)=>{
-      console.log(`error${err}`)
+     // console.log(`error${err}`)
+     res.redirect('/404')
     })
-  
+
     
   })
 
   router.post('/edit-user/:pid',(req,res)=>{
-  
+  try{
     adminHelpers.updateUser(req.params.pid,req.body).then((response)=>{
       res.redirect('/admin/user');
   
     
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   router.get('/delete-user/:id/:stat',(req,res)=>{
+    try{
     let proid=req.params.id
     let status=req.params.stat
    console.log(status)
@@ -346,30 +399,38 @@ router.get('/user',verifyLogin,(req,res)=>{
       res.redirect('/admin/user');
      
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   router.get('/order',verifyLogin,async(req,res)=>{
 
-  
+  try{
     let orders=await adminHelpers.getOrderList()
     
     res.render('admin/order',{admin: req.session.admin,orders,admins:true,ad_log:true,})
-  
+  }catch{
+    res.redirect('/404')
+  }
   })
   
   
   router.post('/dispatch-order',(req,res)=>{  
-  
+  try{
     adminHelpers.updateOrderStaus(req.body).then(async(response)=>{    
       
       res.redirect('/admin/order') 
   
     
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
   
   router.get('/offer', verifyLogin, async(req, res) => {
-  
+  try{
     let categorylist = await productHelper.viewcategory()
     let brandlist = await productHelper.viewbrand()
     let subcategorylist = await productHelper.viewsubcategorylist()
@@ -387,47 +448,59 @@ router.get('/user',verifyLogin,(req,res)=>{
             ad_log:true
         })
     })).catch((err) => {
-        console.log(`error${err}`)
+        //console.log(`error${err}`)
+        res.redirect('/404')
     })
+  }catch{
+    res.redirect('/404')
+  }
 })
   
 
 router.post('/offer/:id',(req,res)=>{  
-  
+  try{
     productHelper.updateOffer(req.body,req.params.id).then(async(response)=>{    
       
       res.redirect('/admin/offer') 
   
     
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   
   
 
 router.get('/Offer-remove/:id',(req,res)=>{
-  
+  try{
     productHelper.removeOffer(req.params.id).then(async(response)=>{    
       
         res.redirect('/admin/offer') 
     
       
       })
-
+    }catch{
+      res.redirect('/404')
+    }
 })  
 
 router.get('/monthlyreport', verifyLogin, async(req, res)=>{
-    
+    try{
     let nowDate = new Date();
     let previousMonth = new Date(nowDate - MONTH_SECONDS)
     adminHelpers.getMonthReport(previousMonth).then((response) => {
       report = response
      res.render('admin/monthlyreport', { report, admin: req.session.admin,admins:true, ad_log:true })
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   router.get('/weeklyreport', verifyLogin, async(req, res)=>{
-    
+    try{
     let nowDate = new Date();
     let previousweek = new Date(nowDate - WEEK_SECONDS)
     adminHelpers.getMonthReport(previousweek).then((response) => {
@@ -435,10 +508,15 @@ router.get('/monthlyreport', verifyLogin, async(req, res)=>{
 
      res.render('admin/weeklyreport', { report, admin: req.session.admin,admins:true , ad_log:true})
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
 
   router.get('/yearlyreport', verifyLogin, async(req, res)=>{
+    try{
+
     
     let nowDate = new Date();
     let previousyear = new Date(nowDate - YEAR_SECONDS)
@@ -449,11 +527,14 @@ router.get('/monthlyreport', verifyLogin, async(req, res)=>{
 
      res.render('admin/yearlyreport', { report, admin: req.session.admin,admins:true,ad_log:true ,totalam})
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   router.get('/dailyreport', verifyLogin, async(req, res)=>{
     
-    
+    try{
     let nowDate = new Date();
     head_data=""
     adminHelpers.SalePerMonth().then((response) => {
@@ -474,11 +555,14 @@ router.get('/monthlyreport', verifyLogin, async(req, res)=>{
 
      res.render('admin/daywisereport', { report, admin: req.session.admin,admins:true,ad_log:true,head_data,totalam,walpay})
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   router.post('/dailyreport', verifyLogin, async(req, res)=>{
     
-    
+    try{
     adminHelpers.SalePerMonth().then((response) => {
     //   report = response
 
@@ -514,7 +598,9 @@ router.get('/monthlyreport', verifyLogin, async(req, res)=>{
     })
 
 
-
+  }catch{
+    res.redirect('/404')
+  }
 
 
   })
@@ -524,30 +610,39 @@ router.get('/monthlyreport', verifyLogin, async(req, res)=>{
   // ......................Coupon management.....................................
 
 router.get('/coupon',verifyLogin, (req, res) => {
+  try{
     adminHelpers.getCoupon().then((coupon) => {
       //console.log(coupon);
       res.render('admin/coupon', { admins: true, coupon ,admin: req.session.admin,activecoupon:true,ad_log:true})
     })
-  
+  }catch{
+    res.redirect('/404')
+  }
   })
   
   router.post('/addCoupon', verifyLogin,(req, res) => {
-  
+  try{
    // console.log(req.body);
     adminHelpers.addCouponToDataBase(req.body).then(() => {
       res.redirect('/admin/coupon')
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
 
   router.post('/edit-coupon/:id',(req,res)=>{  
-  
+  try{
     productHelper.updateCoupon(req.body,req.params.id).then(async(response)=>{    
       
       res.redirect('/admin/coupon') 
   
     
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
 
@@ -557,20 +652,27 @@ router.get('/coupon',verifyLogin, (req, res) => {
   router.get('/delete-coupon/:id',verifyLogin,(req,res)=>{
     // console.log('params');
     // console.log(req.params);
+    try{
     adminHelpers.deleteCoupon(req.params).then(()=>{
       res.redirect("/admin/coupon")
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
   
   router.post('/removeCoupon',verifyLogin, (req, res) => {
-    console.log((req.body));
+    try{
     adminHelpers.removeCoupon(req.body.userid).then((response) => {
       res.json(response)
     })
+  }catch{
+    res.redirect('/404')
+  }
   })
 
   router.get('/categoryoff', verifyLogin, async (req, res, next) => {
-
+try{
     let categorylist = await productHelper.viewcategory()
     
     res.render('admin/categoryoff', {
@@ -579,28 +681,35 @@ router.get('/coupon',verifyLogin, (req, res) => {
         admin: req.session.admin,
         ad_log:true
     })
+  }catch{
+    res.redirect('/404')
+  }
 })
 
 router.post('/categoryoff/:id', verifyLogin, async (req, res, next) => {
- 
+ try{
   productHelper.updatecatOffer(req.body,req.params.id).then(async(response)=>{ 
     productHelper.updateProductamtcatoff(req.body,req.params.id).then(async(response)=>{
       res.redirect('/admin/categoryoff') 
     })   
    
   })
-  
+}catch{
+  res.redirect('/404')
+}
 })
 
 router.get('/delete-categoryoff/:id', verifyLogin, async (req, res, next) => {
- 
+ try{
   productHelper.removecatOffer(req.body,req.params.id).then(async(response)=>{ 
     productHelper.removeProductamtcatoff(req.body,req.params.id).then(async(response)=>{
       res.redirect('/admin/categoryoff') 
     })   
    
   })
-  
+}catch{
+  res.redirect('/404')
+}
 })
 
 
@@ -612,7 +721,7 @@ router.get('/delete-categoryoff/:id', verifyLogin, async (req, res, next) => {
 
 /* GET home page. */
 router.get('/referalcode',verifyLogin, async (req, res, next) =>{
-
+try{
  let referalamount=await productHelper.refamount()
     
    
@@ -622,7 +731,9 @@ router.get('/referalcode',verifyLogin, async (req, res, next) =>{
           ad_log:true,
           referalamount:referalamount
       });
- 
+    }catch{
+      res.redirect('/404')
+    }
 });
 
 // router.post('/refferelcode', verifyLogin, async (req, res) => {
@@ -638,14 +749,17 @@ router.get('/referalcode',verifyLogin, async (req, res, next) =>{
 // })
 
 router.post('/refferelcode', verifyLogin, (req, res) => {
-
+try{
   productHelper.createReferalValue(req.body).then((response) => {
       res.redirect('/admin/referalcode')
   })
+}catch{
+  res.redirect('/404')
+}
 })
 
 router.get('/orderdetail/:id', verifyLogin, async (req, res) => {
-  
+  try{
   let orders = await productHelper.getOrderDetail(req.params.id)
  
   res.render('admin/order-detail', {
@@ -654,6 +768,9 @@ router.get('/orderdetail/:id', verifyLogin, async (req, res) => {
     ad_log:true,
     orders
   })
+}catch{
+  res.redirect('/404')
+}
 })
 
 
