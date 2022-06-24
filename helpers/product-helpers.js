@@ -828,6 +828,48 @@ resolve(products[0])
 
     },
     
+    getbannerDetail: (pro) => {
+        return new Promise(async (resolve, reject) => {
+            let banner = await db.get().collection(collection.BANNER_COLLECTION).find().toArray();
 
+            resolve(banner)
+        })
+    },
+    addbanner: (body,image) => {
+        body.image=image
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.BANNER_COLLECTION).insertOne(body).then((response) => {
+                resolve(response);
+            })
+        })
+    },
+
+    updateBanner: (prodid, proDetails) => {
+       
+        return new Promise((resolve, reject) => {
+
+            db.get().collection(collection.BANNER_COLLECTION).updateOne({
+                _id: objectId(prodid)
+            }, {
+                $set: {
+                    Name: proDetails.Name,
+                    caption: proDetails.caption,
+                    description: proDetails.description,
+                    
+
+                }
+            }).then((response) => {
+                resolve(response)
+            })
+        })
+    },
+    deletebanner: (proid) => {
+        return new Promise((resolve, reject) => {
+
+            db.get().collection(collection.BANNER_COLLECTION).remove({_id: objectId(proid)}).then((response) => {
+                resolve(response)
+            })
+        })
+    },
 
 }

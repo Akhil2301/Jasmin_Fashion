@@ -776,4 +776,64 @@ router.get('/orderdetail/:id', verifyLogin, async (req, res) => {
 
 
 
+
+router.get('/banner', verifyLogin,async(req, res, next)=> {
+  try{
+   
+   
+
+    productHelper.getbannerDetail().then((banner => {
+        res.render('admin/banner', {
+            admins: true,
+            
+            admin: req.session.admin,
+            product:banner,
+            ad_log:true
+        })
+    })).catch((err) => {
+        console.log(`error${err}`)
+    })
+  }catch{
+    res.redirect('/404')
+  }
+});
+
+
+router.post('/banner',verifyLogin,upload.single('image',12),(req,res)=>{
+  try{
+      
+ 
+     productHelper.addbanner(req.body,req.file.filename).then(()=>{
+       res.redirect('/admin/banner')
+       
+     })
+    }catch{
+      res.redirect('/404')
+    }
+  })
+
+
+  router.post('/edit-banner/:id',verifyLogin,async(req,res)=>{  
+   console.log("ga")
+    try{
+   productHelper.updateBanner(req.params.id,req.body).then((response)=>{
+       res.redirect('/admin/banner')})
+    
+   }catch{
+     res.redirect('/404')
+   }
+ })
+
+ router.get('/delete-banner/:id', verifyLogin, async (req, res) => {
+  try{
+      productHelper.deletebanner(req.params.id).then((response) => {
+  
+          res.redirect('/admin/banner');
+  
+      })
+    }catch{
+      res.redirect('/404')
+    }
+  })
+
 module.exports = router;

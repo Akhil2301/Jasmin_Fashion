@@ -65,7 +65,9 @@ router.get('/', async function (req, res) { // console.log(req.body._id)
 
    try{
     headers=await userHelper.getHeader()
-  
+    banner=await userHelper.getbanner()
+    
+    
     cartCount = null
     if (req.session.loggedIn) {
         cartCount = await userHelper.getCartCount(req.session.user._id)
@@ -74,13 +76,13 @@ router.get('/', async function (req, res) { // console.log(req.body._id)
     productHelpers.viewproduct().then(product => {
         if (req.session.user) {
             let a = product
-
-            res.render('user/index', {a, cartCount, user: req.session.user,headers});
+            
+            res.render('user/index', {a, cartCount, user: req.session.user,headers,banner});
 
         } else if (! req.session.admin) {
             let a = product
 
-            res.render('user/index', {a,headers});
+            res.render('user/index', {a,headers,banner});
 
         }
     })

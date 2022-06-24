@@ -11,6 +11,6 @@ module.exports={
     COUPON_COLLETION:"coupon",
     REFERRAL_COLLETION:"referralcode",
     USED_CODE_COLLETION:"usedcode",
-    WALLET_COLLECTION:"wallet"
-   
+    WALLET_COLLECTION:"wallet",
+    BANNER_COLLECTION:"banner"
 }
