@@ -256,7 +256,8 @@ router.get('/add-to-cart/:id', cartcnt, verifyLogin, async(req, res) => {
     userHelper.addToCart(req.params.id, req.session.user._id).then(async (response) => { // res.redirect('/cart')
         cartCount = await userHelper.getCartCount(req.session.user._id)
         cartCount = req.session.cartCount
-        res.json({status: true, cartCount,headers})
+        cnt=response.cnt
+        res.json({status: true, cartCount,headers,cnt})
     })
     }catch{
         res.redirect('/404') 
@@ -310,6 +311,53 @@ router.get('/cart', verifyLogin, cartcnt, async (req, res) => {
     }
 })
 
+
+
+router.get('/addresschoose', verifyLogin, cartcnt, async (req, res) => {
+    try{
+    cartCount = req.session.cartCount
+    let user = req.session.user
+    headers=await userHelper.getHeader()
+    let form1='open'
+    let products = await userHelper.getCartProducts(req.session.user._id)
+
+    // couponccode=products[0].couponccode.toString()
+    // console.log(products[0].couponccode)
+    let coupon = await userHelper.getCartcoupondata(req.session.user._id)
+
+    let totalamount = 0
+    let checks = false
+
+    // console.log(products)
+    if (! products[0]) {
+        totalamount = 0
+        totalamtwithotcoupon=0
+        checks = true
+    } else {
+        totalamount = await userHelper.getTotalAmount(req.session.user._id)
+        totalamtwithotcoupon = await userHelper.getTotalAmountWithoutCoupon(req.session.user._id)
+        checks = false
+    }
+    
+
+    let address = await userHelper.getAddress(req.session.user._id)
+    
+    res.render('user/cart', {
+        products,
+        users: req.session.user._id,
+        checks,
+        cartCount,
+        user,
+        totalamtwithotcoupon,
+        totalamount,
+        address,
+        headers,
+        form1
+    })
+    }catch{
+        res.redirect('/404') 
+    }
+})
 
 /*******************address form ********** */
 router.get('/add-address', cartcnt, verifyLogin, async (req, res) => {
@@ -1081,6 +1129,7 @@ router.get('/categorysort/:id',cartcnt, verifyLogin,async (req, res) => {
             let a = product
             
             res.render('user/shop', {a, cartCount, user: req.session.user,headers});
+           // res.json({a, cartCount, user: req.session.user,headers})
 
        
     })  
@@ -1089,7 +1138,27 @@ router.get('/categorysort/:id',cartcnt, verifyLogin,async (req, res) => {
 }  
 })
 
-router.get('/shopsort/:price',cartcnt, verifyLogin,async (req, res) => {
+router.post('/categorysort/:id',cartcnt, verifyLogin,async (req, res) => {
+    try{
+    cartCount = req.session.cartCount
+   
+    headers=await userHelper.getHeader()
+
+    sortHelper.viewCategoryId(req.params.id).then(product => {
+        
+            let a = product
+            
+            //res.render('user/shop', {a, cartCount, user: req.session.user,headers});
+            res.json({a, cartCount, user: req.session.user,headers})
+
+       
+    })  
+}catch{
+    res.redirect('/404') 
+}  
+})
+
+router.post('/shopsort/:price',cartcnt, verifyLogin,async (req, res) => {
     try{
         cartCount = req.session.cartCount
        
@@ -1098,9 +1167,11 @@ router.get('/shopsort/:price',cartcnt, verifyLogin,async (req, res) => {
         productHelpers.viewproduct().then(product => {
         
             let a = product
-            
-            res.render('user/shop', {a, cartCount, user: req.session.user,headers,checkamount:req.params.price});
-    
+           
+            //res.render('user/shop', {a, cartCount, user: req.session.user,headers,checkamount:req.params.price});
+            //res.render('user/shop', {a, cartCount, user: req.session.user,headers},function(err,html){
+                res.json({a, cartCount, user: req.session.user,headers})
+            // })
        
     })
 
@@ -1109,9 +1180,11 @@ router.get('/shopsort/:price',cartcnt, verifyLogin,async (req, res) => {
         sortHelper.priceSort(req.params.price).then(product => {
             
             let a = product
-            
-            res.render('user/shop', {a, cartCount, user: req.session.user,headers,checkamount:req.params.price});
-
+            console.log(a)
+            //res.render('user/shop', {a, cartCount, user: req.session.user,headers,checkamount:req.params.price});
+            //res.render('user/shop', {a, cartCount, user: req.session.user,headers},function(err,html){
+                res.json({a, cartCount, user: req.session.user,headers})
+            //})
        
     })
     }

@@ -25,9 +25,9 @@ function addtocart(proId){
      success:(response)=>{
          if(response.status){
            let count=$('#cart-count').html()
-      
-           //count=parseInt(count)+1
-           location.reload()
+          
+           count=parseInt(count)+response.cnt
+           //location.reload()
            $('#cart-count').html(count)
            
          }
@@ -232,5 +232,168 @@ function change(cartId,proId,userId,count){
   
     }
 
+
+
+
+
+
+    $('input[name=price]').change(() => {
+
+      let div = document.getElementById('sortdata')
+
+
+      var value = $('input[name=price]:checked').val();
+
+
+      $.ajax({
+          url: '/shopsort/' + value,
+          method: 'post',
+          data: $('#price').serialize(),
+          success: (response) => {
+            
+              div.innerHTML = ""
+              for (let i = 0; i < response.a.length; i++) {
+                tot=0
+                if (response.a[i].status){
+                  if (response.a[i].catoffstatus){
+                      tot=response.a[i].offerper+ response.a[i].catofferper
+                  }
+                  else{
+                    tot=response.a[i].offerper
+                  }
+                }
+                else{
+                  if (response.a[i].catoffstatus){
+                    tot=response.a[i].catofferper
+                  }
+                  else{
+                    tot=0
+                  }
+                }
+
+
+
+                  div.innerHTML += ` 
+        <div class="col-lg-4 col-md-6 col-sm-6">
+                      <div class="product__item">
+                          <div class="product__item__pic" style="background-image:url('/uploads/${response.a[i].images[0]}')">
+                          <h5><span class="badge text-danger ms-2">${tot}% off</span></h5>
+
+                              <ul class="product__hover">
+
+                                  <li><a href="/product-details/${response.a[i]._id}"><img src="/user/img/icon/compare.png"
+                                              alt="">
+                                          <span>Go To detail</span></a></li>
+                                  
+                                  <li><a onclick="addtocart('${response.a[i]._id}')"><img src="/user/img/icon/cart.png" alt="">
+                                          <span>+Add to cart</span></a></li>
+
+                              </ul>
+                          </div>
+                          <div class="product__item__text">
+                              <h6>${response.a[i].Name}</h6>
+                              <a class="btn add-cart" onclick="addtocart('{{this._id}}')">
+                                  + Add To cart
+
+                              </a>
+<s>&#x20B9; ${response.a[i].price}</s><strong class="ms-2 text-danger"> &#x20B9; ${response.a[i].total}</strong>
+                             
+
+
+                          </div>
+                      </div>
+                  </div>
+                       `
+
+
+              }
+
+          }
+      })
+  })
+
+function catsort(e,id){
+   
+e.preventDefault()
+      let div = document.getElementById('sortdata')
+
+
+     
+
+
+      $.ajax({
+          url: '/categorysort/'+id,
+          method: 'post',
+          data: $('#price').serialize(),
+          success: (response) => {
+              console.log(response.a)
+              div.innerHTML = ""
+              for (let i = 0; i < response.a.length; i++) {
+                tot=0
+                if (response.a[i].status){
+                  if (response.a[i].catoffstatus){
+                      tot=response.a[i].offerper+ response.a[i].catofferper
+                  }
+                  else{
+                    tot=response.a[i].offerper
+                  }
+                }
+                else{
+                  if (response.a[i].catoffstatus){
+                    tot=response.a[i].catofferper
+                  }
+                  else{
+                    tot=0
+                  }
+                }
+
+                  div.innerHTML += ` 
+        <div class="col-lg-4 col-md-6 col-sm-6">
+                      <div class="product__item">
+                          <div class="product__item__pic" style="background-image:url('/uploads/${response.a[i].images[0]}')">
+                          
+                        
+
+                          <h5><span class="badge text-danger ms-2">${tot}% off</span></h5>
+                         
+
+
+
+
+
+
+                              <ul class="product__hover">
+
+                                  <li><a href="/product-details/${response.a[i]._id}"><img src="/user/img/icon/compare.png"
+                                              alt="">
+                                          <span>Go To detail</span></a></li>
+                                 
+                                  <li><a onclick="addtocart('${response.a[i]._id}')"><img src="/user/img/icon/cart.png" alt="">
+                                          <span>+Add to cart</span></a></li>
+
+                              </ul>
+                          </div>
+                          <div class="product__item__text">
+                              <h6>${response.a[i].Name}</h6>
+                              <a class="btn add-cart" onclick="addtocart('{{this._id}}')">
+                                  + Add To cart
+
+                              </a>
+<s>&#x20B9; ${response.a[i].price}</s><strong class="ms-2 text-danger"> &#x20B9; ${response.a[i].total}</strong>
+                             
+
+
+                          </div>
+                      </div>
+                  </div>
+                       `
+
+
+              }
+
+          }
+      })
+  
+}
   
  

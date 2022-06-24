@@ -161,7 +161,7 @@ module.exports = {
                             'products.$.quantity': 1
                         }
                     }).then((response) => {
-                        resolve()
+                        resolve({cnt:0})
                     })
                 } else {
                     db.get().collection(collection.CART_COLLECTION).updateOne({
@@ -173,7 +173,7 @@ module.exports = {
                         }
 
                     }).then((response) => {
-                        resolve()
+                        resolve({cnt:1})
                     })
                 }
 

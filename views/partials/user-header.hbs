@@ -1,59 +1,108 @@
-<!-- navbar -->
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
-        <div class="container">
-            <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="/">
-                {{!-- <img src="" alt="site icon"> --}}
-                <span class="text-uppercase fw-lighter ms-2">Jasmin Fashions</span>
-            </a>
 
-            <div class="order-lg-2 nav-btns">
-                {{#if user}}
-                <a type="button" class="btn position-relative" href="/cart">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge bg-primary"
-                        id="cart-count">{{cartCount}}</span>
-                </a>
-                {{/if}}
-                {{#if user}}
-                <div class="dropdown">
-                    <button class="dropbtn"> <i class="fa fa-user"> &nbsp;{{user.fname}}</i></button>
-                    <div class="dropdown-content">
-                        <a href="/userpage">My Account</a>
-                        <a href="/order-success">Orders</a>
-                        <a href="/logout">Logout</a>
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+
+        {{#if user}}
+        <div class="offcanvas__top__hover">
+            <span><i class="fa fa-user"></i></span>
+            <ul>
+                <li><a href="/userpage">Account</a></li>
+                <li><a href="/order-success">Orders</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+        {{else}}
+        <div class="offcanvas__links">
+            <a href="/login">Sign in</a>
+
+        </div>
+        {{/if}}
+    </div>
+    <div class="offcanvas__nav__option">
+
+        <!--<a href="#"><img src="img/icon/heart.png" alt=""></a>-->
+        {{#if user}}
+        <a href="/cart"><i class="fa fa-shopping-cart"></i><span
+                style="color:rgb(13, 31, 228) ; font-size:18px ;font-weight:800; padding-left:15px ;">{{cartCount}}</span></a>
+        {{/if}}
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+        {{!-- <p>Free shipping, </p> --}}
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+                        <p>Free shipping, Availbale </p>
                     </div>
                 </div>
-                {{else}}
-                <a href="/login" class="dropbtn"> <i class="fa fa-user"></i></a>
-                {{/if}}
-                {{!-- <button type="button" class="btn position-relative">
-                    <i class="fa fa-search"></i>
-                </button> --}}
-            </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right">
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                        {{#if user}}
+                        <div class="header__top__hover">
+                            <span><i class="fa fa-user"></i></span>
+                            <ul style="padding: 20px 50px;">
+                                <li style="font-weight:500; font-size:16px;"><a href="/userpage">Account</a></li>
+                                <li style="font-weight:500; font-size:16px;"><a href="/order-success">Orders</a></li>
+                                <li style="font-weight:500; font-size:16px;"><a href="/logout">Logout</a></li>
+                            </ul>
+                        </div>
+                        {{else}}
+                        <div class="header__top__links">
+                            <a href="/login">Sign in</a>
 
-            <div class="collapse navbar-collapse order-lg-1" id="navMenu">
-                <ul class="navbar-nav mx-auto text-center">
-                    <li class="nav-item px-2 py-2">
-                        <a class="nav-link text-uppercase text-dark" href="/">Home</a>
-                    </li>
-                    {{#each headers}}
-                    <li class="nav-item px-2 py-2">
-                        <a class="nav-link text-uppercase text-dark" href="/categorysort/{{this._id}}">{{this.category}}</a>
-                    </li>
-                    {{/each}}
-                    <li class="nav-item px-2 py-2">
-                        <a class="nav-link text-uppercase text-dark" href="/shop">Shop</a>
-                    </li>
-                    
-
-                </ul>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-</header>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <span class="text-uppercase fw-lighter ms-2"
+                        style="color: black; font-size:22px; font-weight:800; letter-spacing: 3px;">Jasmin
+                        Fashions</span>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li class=""><a class="text-uppercase" href="/">Home</a></li>
+                        <li><a class="text-uppercase" href="/shop">Shop</a></li>
+                        {{#each headers}}
+                        <li>
+                            <a class="nav-link text-uppercase text-dark"
+                                href="/categorysort/{{this._id}}">{{this.category}}</a>
+                        </li>
+                        {{/each}}
 
+                       
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+
+                    <a href="/cart"><i class="fa fa-shopping-cart"></i><span id="cart-count"
+                            style="color:rgb(13, 31, 228) ; font-size:18px ;font-weight:800; padding-left:15px ;">{{cartCount}}</span></a>
+
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->

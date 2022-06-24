@@ -78,6 +78,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({limit: '50mb', extended: true }));
 app.use(cookieParser());
+app.use('/public/uploads', express.static('public/uploads'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req,res,next)=>{ 
@@ -125,8 +126,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-// const PORT=process.env.PORT||5000
-// app.listen(PORT,
-//     console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
-//     ) 
+const PORT=process.env.PORT||3000
+app.listen(PORT,
+    console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+    ) 
 module.exports = app;

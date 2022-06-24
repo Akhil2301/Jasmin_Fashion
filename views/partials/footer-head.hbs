@@ -1,19 +1,69 @@
-<footer class="page-footer text-center font-small wow fadeIn bg-primary ">
-
-    
 
 
-    <!-- Social icons -->
-    <div class="pb-4">
-      
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    
+                    <p>The customer is at the heart of our unique business model,.</p>
+                   
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Shopping</h6>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/">Product</a></li>
+                        {{#each headers}}
+                        <li>
+                            <a 
+                                href="/categorysort/{{this._id}}">{{this.category}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    {{!-- <h6>Shopping</h6>
+                    <ul>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Delivary</a></li>
+                        <li><a href="#">Return & Exchanges</a></li>
+                    </ul> --}}
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>Copyright ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        Jasmin Fashion
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Social icons -->
-
-    <!--Copyright-->
-    <div class="footer-copyright py-3">
-      © 2022 Copyright  : 
-          <a href="" style="text-decoration:none;font-size:larger; font-weight:600; color:rgb(255, 242, 0)" > Jasmin Fashions </a>
-    </div>
-    <!--/.Copyright-->
-
-  </footer>
+</footer>
+<!-- Footer Section End -->

@@ -423,7 +423,7 @@ var objectId = require('mongodb').ObjectId
                        }
                     }
                 ]).toArray();
-                 console.log(products)
+                
                 resolve(products)
 
             })
