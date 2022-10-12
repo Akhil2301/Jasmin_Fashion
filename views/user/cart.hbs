@@ -1,6 +1,6 @@
 <section class="h-100 gradient-custom">
-  <div class="container py-5">
-    <div class="row d-flex justify-content-center ">
+  <div class="container py-2 pb-5">
+    <div class="row d-flex justify-content-center pb-5 ">
       <div class="col-md-8">
         <div class="card mb-4">
           <div class="card-header py-3">
@@ -73,9 +73,9 @@
                   {{!-- <strong>&#x20B9; {{this.product.oferamt}}</strong>
                   {{else}}
                   <strong>&#x20B9; {{this.product.price}}</strong> --}}
-                  <strong>&#x20B9; {{total}}</strong>
+                  <strong>&#x20B9; {{mul this.quantity total}}</strong>
                   {{else}}
-                  <strong>&#x20B9; {{total}}</strong>
+                  <strong>&#x20B9; {{mul this.quantity total}}</strong>
                   {{/if}}
                 </p>
                 <!-- Price -->
@@ -171,10 +171,10 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 mb-4">
         <div class="card mb-4">
           <div class="card-header py-3">
-            <h5 class="mb-0">Summary</h5>
+            <h5 class="mb-5">Summary</h5>
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
@@ -268,8 +268,8 @@
                   </div>
                   <form action="/place-orders" id="addressSelection" method="post">
 
-                    <div class="addressList mCustomScrollbar _mCS_7 mCS_no_scrollbar">
-                      <div id="mCSB_7" class="mCustomScrollBox mCS-AS-theme mCSB_vertical mCSB_inside" tabindex="0"
+                    <div class="addressList mCustomScrollbar _mCS_7 mCS_no_scrollbar pb-5">
+                      <div id="mCSB_7" class=" mCustomScrollBox mCS-AS-theme mCSB_vertical mCSB_inside" tabindex="0"
                         style="max-height: none;">
                         <div id="mCSB_7_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
                           style="position:relative; top:0; left:55px;" dir="ltr">
@@ -324,6 +324,7 @@
                     {{/if}}
                     </div>
                   </form>
+                 
                 </div>
 
               </div>
@@ -336,7 +337,11 @@
   </div>
   </div>
 </section>
+<div class="mb-5" >
+ 
+</div>
 
+</div>
 <script>
   window.onload = function () {
     document.getElementById("open").click();
@@ -544,7 +549,7 @@
 
                           <div class="card-body">
                             <h5 class="card-title" id='coupon_name'>Coupon ${c + i} :  ${response[i].coupon}</h5>
-                            <p class="card-text"> <input type="text" class="border-1 text-success" value="${response[i]._id}" id="code">
+                            <p class="card-text"> <input type="text" class="border-1 text-success" value="${response[i]._id}" id="code"> <button class="bg-warning border-0" onclick="myFunction()">Copy Code</button>
                             </p>
                             <h6 id="offper">offper ${response[i].percentage} %</h6>
                           </div>
@@ -558,4 +563,20 @@
 
   }
 
+    function myFunction() {
+        /* Get the text field */
+        var copyText = document.getElementById("code");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+
+        /* Alert the copied text */
+
+    }
+
 </script>
+

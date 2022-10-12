@@ -435,7 +435,7 @@ module.exports = {
                         _id:{$dateToString:{format: "%Y-%m-%d", date: "$dat"}
                         },
 
-
+ 
                         TotalSum: {
                             $sum: "$totalAmount"
                         },

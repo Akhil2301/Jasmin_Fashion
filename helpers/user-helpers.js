@@ -3,8 +3,7 @@ var collection = require('../config/collection');
 const bcrypt = require('bcrypt');
 const Razorpay = require('razorpay')
 var objectId = require('mongodb').ObjectId
-// const dotenv=require('dotenv');
-// dotenv.config({path:'./config/config.env'})
+
 
 var instance = new Razorpay({key_id: process.env.RAZOR_ID, key_secret: process.env.RAZOR_SECRET_ID});
 
@@ -12,7 +11,7 @@ const paypal = require('paypal-rest-sdk');
 
 
 paypal.configure({
-    'mode': 'sandbox', // sandbox or live
+    'mode': 'sandbox', 
     'client_id': process.env.CLIENT_ID,
     'client_secret': process.env.CLIENT_SECRET
 });
@@ -46,16 +45,7 @@ module.exports = {
 
     },
 
-    // userDetail:(userid)=>{
-    //     return new Promise(async (resolve, reject) => {
-
-    //         let user = await db.get().collection(collection.USER_COLLECTION).findOne({_id: objectId(userid)})
-    //     //    console.log(user)
-    //         resolve(user);
-    //     })
-
-    //     //let user = await db.get().collection(collection.USER_COLLECTION).findOne({email: userData.email});
-    // },
+    
     doSignup: (userData) => {
 
         return new Promise(async (resolve, reject) => {
@@ -70,7 +60,7 @@ module.exports = {
             return new Promise(async (reso, rej) => {
 
                 let respon = {}
-                //let userin = await db.get().collection(collection.USER_COLLECTION).findOne({email: userData.email});
+               
 
                 db.get().collection(collection.USER_COLLECTION).insertOne(imUser).then(async(data) => {
 
@@ -97,7 +87,7 @@ module.exports = {
 
                     
                     let user = await db.get().collection(collection.USER_COLLECTION).findOne({email: userData.email});
-                    // resolve(data.insertedId.toString());
+                  
                     resolve(user);
 
                 }).catch((err) => {
